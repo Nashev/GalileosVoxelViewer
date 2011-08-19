@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-us">
+<head>
+  <title>Abbrevia v4.0</title>
+  <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+  <style type="text/css">
+    a:link {color: #03f; text-decoration: none;}
+    a:visited {color: #03f; text-decoration: none;}
+    a:hover {text-decoration: underline;}
+    h3 > a:hover {text-decoration: none;}
+    body {font-family: 'Verdana', 'Arial', Sans-Serif; font-size: 10pt;}
+    li {margin-bottom: .3em;}
+  </style>
+</head>
+
+<body>
+
+<h1>Abbrevia</h1>
+
+<p>Version 4.0<br>
+March 14, 2011<br>
+<a href="http://www.sourceforge.net/projects/tpabbrevia">Home Page</a></p>
+
+<hr>
+
+<h3>Table of contents</h3>
+
+<ul>
+  <li><a href="#intro">Introduction</a></li>
+  <li><a href="#packages">Packages</a></li>
+  <li><a href="#install">Installation</a></li>
+  <li><a href="#support">Support and feedback</a></li>
+  <li><a href="#devel">Development sources</a></li>
+  <li><a href="#contribute">Getting involved</a></li>
+  <li><a href="#license">License</a></li>
+  <li><a href="#changes">Changes from 3.05</a></li>
+</ul>
+
+
+<!--====================--><hr>
+
+
+<h3><a name="intro">Introduction</a></h3>
+
+<p>Abbrevia is a compression toolkit for Embarcadero Delphi, C++ Builder, and Kylix. It supports PKZip, CAB, tar, gzip, bzip2 and zlib compression formats, and the creation of self-extracting executables. It also includes visual components that simplify displaying zip files.</p>
+
+<p>Abbrevia 4.0 adds many new features and bug fixes including:</p>
+
+<ul>
+  <li>Zipx decompression algorithms (bzip2, Lzma, PPMd, WavPack)</li>
+  <li>Bzip2 archives (.bz2, .tbz)</li>
+  <li>Unicode filenames in PKZip and CAB archives with improved compatibility for non-Unicode archivers</li>
+  <li>Tar long filenames and symbolic links (GNU and UStar formats)</li>
+  <li>Empty folders in PKZip and tar archives</li>
+  <li>Translations available in Afrikaans, Dutch, French, German and Russian</li>
+</ul>
+
+<p>This is a source-only release. It includes design-time and run-time packages for Delphi 6 through Delphi XE, C++Builder 2009, 2010, and XE, and Kylix 3.  Kylix 3 does not support Lzma, PPMd, or WavPack decompression.</p>
+
+
+<!--====================--><hr>
+
+
+<h3><a name="packages">Packages</a></h3>
+
+<p>Abbrevia includes the following packages:</p>
+
+<ul>
+  <li><b>Abbrevia.bpl</b>: Runtime non-visual components.  <code>TAbZipBrowse</code>, <code>TAbZipKit</code>, <code>TAbMakeCab</code>, etc.</li>
+  <li><b>AbbreviaVCL.bpl</b>: Runtime visual components.  <code>TAbProgressMeter</code>, <code>TAbZipOutline</code>.</li>
+  <li><b>AbbreviaVCLDesign.bpl</b>: Designtime support.</li>
+  <li><b>AbbreviaCLX.bpl</b>, <b>AbbreviaCLXDesign.bpl</b> (Delphi 6/7): CLX visual components.</li>
+</ul>
+
+<p><code>$LIBSUFFIX</code> is used, so each .bpl/.bpi will have a version number after it corresponding to the compiler version (e.g. 150 for Delphi XE).</p>
+
+<p>The Kylix 3 <code>AbbreviaCLX</code> package includes all of the non-visual runtime units, and the <code>Abbrevia</code> package is not included separately.</p>
+
+
+<!--====================--><hr>
+
+
+<h3><a name="install">Installation</a></h3>
+
+<p>To install TurboPower Abbrevia into your IDE:</p>
+
+<ol>
+  <li>Unzip the release files into a directory (e.g., d:\abbrevia).</li>
+  <li>Start Delphi or C++Builder.</li>
+  <li>Add the source subdirectory (e.g. d:\abbrevia\source) to the Delphi Library path.</li>
+  <li>If using C++Builder, add the source subdirectory to C++Builder's Include and Library paths.</li>
+  <li>Open the project group in the packages directory that corresponds to the IDE being used (e.g. "Delphi XE.groupproj").</li>
+  <li>Start at the top of the project group and compile each package in turn.  If using C++Builder, install it each one after compiling.</li>
+  <li>Select the "AbbreviaVCLDesign" package and install it.  The IDE should notify you that the components have been installed.  If you are using Delphi 7 you can install "AbbreviaCLXDesign" as well to get CLX designtime support.</li>
+  <li>Make sure the PATH environmental variable contains the directory in which the compiled packages (i.e. BPL or DPL files) were placed.</li>
+</ol>
+
+
+<!--====================--><hr>
+
+
+<h3><a name="support">Support and feedback</a></h3>
+
+<p><a href="https://sourceforge.net/projects/tpabbrevia/forums">Support forums</a> are available on the SourceForge project site.</p>
+
+<p>Bug reports can be entered in the <a href="http://sourceforge.net/tracker/?atid=529778&group_id=71001&func=browse">bug tracker</a>. If possible please include a small test case that reproduces the issue. Sample files can be attached to the bug report, and confidential data can be emailed to the project administrator.</p>
+
+<p>If you have something you would like to see in the product feel free to add a <a href="http://sourceforge.net/tracker/?atid=529781&group_id=71001&func=browse">feature request</a>.</p>
+
+
+<!--====================--><hr>
+
+
+<h3><a name="devel">Development sources</a></h3>
+
+<p>The current source code is available in the Subversion <a href="https://sourceforge.net/scm/?type=svn&group_id=71001">repository</a>. The code here may not be as stable or tested as the official releases, but may include bug fixes or new features not yet included in the downloadable releases.</p>
+
+<p>The repository also includes <a href="http://dunit.sourceforge.net/">DUnit</a> tests and the source code to the third-party libraries.</p>
+
+
+<!--====================--><hr>
+
+
+<h3><a name="contribute">Getting involved</a></h3>
+
+<p>If you want to help make Abbrevia better, there are several ways to get involved. We welcome help with features and bug fixes. Just look in the issue tracker to see what's needed. We're also looking for help for:</p>
+
+<ul>
+  <li>C++Builder maintainer</li>
+  <li>FreePascal maintainer</li>
+  <li>Webmaster</li>
+  <li>Documentation</li>
+  <li>Examples</li>
+</ul>
+
+
+<!--====================--><hr>
+
+
+<h3><a name="license">License</a></h3>
+
+<p>Abbrevia is licensed under the <a href="http://www.mozilla.org/MPL/MPL-1.1.html">Mozilla Public License</a>, version 1.1. It can be used in commercial and closed-source applications provided any changes to Abbrevia units are made available electronically.</p>
+
+<p>The <a href="http://www.wavpack.com/">WavPack</a> library used for zipx decompression has its own license, included as "WavPack License.txt". Redistribution requires a copyright notice in your documentation or elsewhere in your distribution. WavPack support can be removed by disabling the <b>UnzipZipxSupport</b> or <b>UnzipWavPackSupport</b> conditional define in <b>AbDefine.inc</b>.</p> 
+
+
+<!--====================--><hr>
+
+
+<h3><a name="changes">Changes from 3.05</a></h3>
+
+<p>These are the most significant features, fixes and changes made since v3.05. There are many other bug fixes and low-level improvements, the details of which are available in the Subversion log.</p>
+
+<h4>Features</h4>
+
+<ul>
+  <li><p>Added support for decompressing PKZip files created with bzip2, Lzma, PPMd and WavPack compression. Abbrevia can now read all of the .zipx compression methods besides JPEG. All libraries are statically linked.</p>
+    <ul>
+      <li>Bzip2 is based on Edison Mera's Delphi wrapper for the official 1.04 SDK .c files.<br>
+          <a href="http://edisonlife.homelinux.com/bzip2-unit/">http://edisonlife.homelinux.com/bzip2-unit/</a>
+          <a href="http://www.bzip.org">http://www.bzip.org</a></li>
+      <li>Lzma is based on the official v9.20 SDK .c files (public domain).<br>
+          <a href="http://7-zip.org/sdk.html">http://7-zip.org/sdk.html</a></li>
+      <li>PPMd is based on Dag Ågren's Objective-C conversion of Dmitry Shkarin's original C++ PPMd variant I.1 release (public domain).<br>
+          <a href="http://code.google.com/p/theunarchiver/">http://code.google.com/p/theunarchiver/</a><br>
+          <a href="http://www.compression.ru/ds/">http://www.compression.ru/ds/</a></li>
+      <li>WavPack is based on the official v4.60.1 SDK .c files (see "WavPack License.txt").<br>
+          <a href="http://wavpack.com/">http://wavpack.com/</a><br><br></li>
+    </ul>  
+  </li>
+  <li>Added <b>TAbBzip2Archive</b> that supports .bz2 archives and bzipped tars. TAbZipper, TAbUnzipper and TAbZipKit are updated to support them.
+  <li><p>Added full Unicode filename support for zips and cabs.</p>
+    <ul>
+      <li>When loading, zips now support UTF-8 encoding and the Info-Zip and Xceed Unicode path extra headers. ANSI or OEM encoding is detected based on the VersionMadeBy OS field and by examining the extended characters for letters that only occur in one encoding or the other.</li>
+      <li>When saving/renaming filenames use OEM or ANSI encoding if possible (possibly with best-fit character mapping), or fall back to UTF-8 if there are characters that don't map to the current code pages. Any filenames stored in ANSI or OEM which include extended characters are also stored using the Info-Zip Unicode path extra header.</li>
+      <li>CAB files now support the UTF-8 filename flag for both reading and writing. UTF-8 is always used when saving files, so filenames containing extended characters may not be compatible with older versions of Abbrevia.</li>
+    </ul>
+  </li>
+  <li><p>Added support for long filenames in tar archives. Long filenames and symbolic link paths are read and written using the GNU extended headers and the UStar extension. Other extended headers (e.g., POSIX) are no longer lost when modifying a tar. Implemented by Joel Haynie, <a href="http://www.scootersoftware.com">Scooter Software</a>.</p></li>
+  <li>Added support for storing/extracting empty folders in tar archives, and improved support for them in PKZip archives.</li>
+  <li>Added <code>for..in</code> support to <code>TAbArchiveList</code>.</li>
+  <li><code>AbDetermineArcType</code> can now detect archives with unknown extensions based on their content [3126055].</li>
+  <li>Added <code>Stream</code> property to <code>TAbZipBrowse/TAbZipper/TAbUnzipper/TAbZipKit</code> non-visual controls that can be used to load an archive from a stream instead of a file.
+  <li>Added <code>AbResString</code> unit with string constants. Translations are available in Afrikaans, Dutch, French, German and Russian. Thanks to Henri Hakl, Rudy Velthuis, Hichem Bouksani, Roman Kassebaum and Pavel Koptev.</li>
+  <li><code>TAbZipView</code> now supports themeing and exposes properties added to TCustomGrid in newer versions of Delphi (Anchors, Bevel*, DrawingStyle, GradientEndColor, GradientStartColor, Touch, OnGesture, OnMouseActivate, OnMouseEnter and OnMouseLeave). The gdsClassic DrawingStyle roughly matches the pre-Delphi 2010 appearance.</li>
+  <li>Added <code>HostOS</code> property to <code>TAbZipItem</code> and added more values to <code>TAbZipHostOS</code> enumeration based on newer AppNote.txt and Info-ZIP additions.</li>
+  <li>PKZip files created on Linux systems now store the Unix mode in addition to the DOS attributes.</li>
+</ul>
+
+<h4>Bug fixes</h4>
+
+<ul>
+  <li>Fixed .tar/.gz support so LastModFileDate/LastModFileTime/LastModTimeAsDateTime are all in local time, rather than UTC, and the dates are set correctly when storing and extracting files. [1327858]</li>
+  <li>Cab extraction errors now pass the Win32 error code to DoProcessItemFailure.</li>
+  <li>Fixed <code>TAbZipView</code> drawing when multiple rows are selected.</li>
+  <li>Fixed <code>TAbZipOutline</code> not responding to drag & drop resizing at design-time.</li>
+  <li>Fixed <code>OnNeedPassword</code> not using correct password on last try [1093711].
+
+</ul>
+
+<h4>Cleanup</h4>
+
+<ul>
+  <li>Removed support for Delphi 1-5.</li>
+  <li>Removed <code>AbUnZipMemory</code> and <code>AbUnZipTempFile</code> conditional defines introduced in v3.05.</li>
+  <li>Removed <code>TAbMeterLink</code>. The <code>ItemProgressMeter/ArchiveProgressMeter</code> properties support <code>TAbMeter</code> directly again.</li>
+  <li>Removed <code>TAbPadLock</code> and implicit (partial) locking while archives are busy. Use an explicit critical section if you access a single archive object from multiple threads.</li>
+  <li>Merged .inc files for visual controls into the VCL .pas files (e.g. AbCompnd.inc's code was moved into AbCompnd.pas). CLX versions (AbQCmpnd.pas) now include the VCL .pas file instead. This improves IDE compatibility in general, and ErrorInsight and DFM/XFM support, specifically.</li>
+</ul>
+
+</body>
+</html>
