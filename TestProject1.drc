@@ -8,276 +8,250 @@
   resources were bound to the produced executable.
 */
 
-#define AbResString_AbLtDeleteS 65216
-#define AbResString_AbLtExtractS 65217
-#define AbResString_AbLtFreshenS 65218
-#define AbResString_AbLtMoveS 65219
-#define AbResString_AbLtReplaceS 65220
-#define AbResString_AbLtStartS 65221
-#define AbResString_AbGzipInvalidS 65222
-#define AbResString_AbGzipBadCRCS 65223
-#define AbResString_AbGzipBadFileSizeS 65224
-#define AbResString_AbTarInvalidS 65225
-#define AbResString_AbTarBadFileNameS 65226
-#define AbResString_AbTarBadLinkNameS 65227
-#define AbResString_AbTarBadOpS 65228
-#define AbResString_AbUnhandledEntityS 65229
-#define AbResString_AbVMSInvalidOriginS 65232
-#define AbResString_AbVMSErrorOpenSwapS 65233
-#define AbResString_AbVMSSeekFailS 65234
-#define AbResString_AbVMSReadFailS 65235
-#define AbResString_AbVMSWriteFailS 65236
-#define AbResString_AbVMSWriteTooManyBytesS 65237
-#define AbResString_AbBBSReadTooManyBytesS 65238
-#define AbResString_AbBBSSeekOutsideBufferS 65239
-#define AbResString_AbBBSInvalidOriginS 65240
-#define AbResString_AbBBSWriteTooManyBytesS 65241
-#define AbResString_AbSWSNotEndofStreamS 65242
-#define AbResString_AbSWSSeekFailedS 65243
-#define AbResString_AbSWSWriteFailedS 65244
-#define AbResString_AbSWSInvalidOriginS 65245
-#define AbResString_AbSWSInvalidNewOriginS 65246
-#define AbResString_AbLtAddS 65247
-#define AbResString_AbNoCabinetDllErrorS 65248
-#define AbResString_AbFCIFileOpenErrorS 65249
-#define AbResString_AbFCIFileReadErrorS 65250
-#define AbResString_AbFCIFileWriteErrorS 65251
-#define AbResString_AbFCIFileCloseErrorS 65252
-#define AbResString_AbFCIFileSeekErrorS 65253
-#define AbResString_AbFCIFileDeleteErrorS 65254
-#define AbResString_AbFCIAddFileErrorS 65255
-#define AbResString_AbFCICreateErrorS 65256
-#define AbResString_AbFCIFlushCabinetErrorS 65257
-#define AbResString_AbFCIFlushFolderErrorS 65258
-#define AbResString_AbFDICopyErrorS 65259
-#define AbResString_AbFDICreateErrorS 65260
-#define AbResString_AbInvalidCabTemplateS 65261
-#define AbResString_AbInvalidCabFileS 65262
-#define AbResString_AbVMSReadTooManyBytesS 65263
-#define AbResString_AbStreamFullS 65264
-#define AbResString_AbNoSuchDirectoryS 65265
-#define AbResString_AbInflateBlockErrorS 65266
-#define AbResString_AbBadStreamTypeS 65267
-#define AbResString_AbTruncateErrorS 65268
-#define AbResString_AbZipBadCRCS 65269
-#define AbResString_AbZipBadStubS 65270
-#define AbResString_AbFileNotFoundS 65271
-#define AbResString_AbInvalidLFHS 65272
-#define AbResString_AbNoArchiveS 65273
-#define AbResString_AbReadErrorS 65274
-#define AbResString_AbInvalidIndexS 65275
-#define AbResString_AbInvalidThresholdS 65276
-#define AbResString_AbUnhandledFileTypeS 65277
-#define AbResString_AbSpanningNotSupportedS 65278
-#define AbResString_AbFileSizeTooBigS 65279
-#define VDBConsts_SRefreshRecord 65280
-#define VDBConsts_SRemoteLogin 65281
-#define AbResString_AbErrZipInvalidS 65282
-#define AbResString_AbZipVersionNeededS 65283
-#define AbResString_AbUnknownCompressionMethodS 65284
-#define AbResString_AbNoExtractionMethodS 65285
-#define AbResString_AbInvalidPasswordS 65286
-#define AbResString_AbNoInsertionMethodS 65287
-#define AbResString_AbInvalidFactorS 65288
-#define AbResString_AbDuplicateNameS 65289
-#define AbResString_AbUnsupportedCompressionMethodS 65290
-#define AbResString_AbUserAbortS 65291
-#define AbResString_AbArchiveBusyS 65292
-#define AbResString_AbBadSpanStreamS 65293
-#define AbResString_AbNoOverwriteSpanStreamS 65294
-#define AbResString_AbNoSpannedSelfExtractS 65295
-#define DBConsts_SInvalidBcdValue 65296
-#define DBConsts_SCouldNotParseTimeStamp 65297
-#define DBConsts_SInvalidSqlTimeStamp 65298
-#define ComConst_SOleError 65299
-#define ComConst_SNoMethod 65300
-#define ComConst_SVarNotObject 65301
-#define ComConst_STooManyParams 65302
-#define VDBConsts_SFirstRecord 65303
-#define VDBConsts_SPriorRecord 65304
-#define VDBConsts_SNextRecord 65305
-#define VDBConsts_SLastRecord 65306
-#define VDBConsts_SInsertRecord 65307
-#define VDBConsts_SDeleteRecord 65308
-#define VDBConsts_SEditRecord 65309
-#define VDBConsts_SPostEdit 65310
-#define VDBConsts_SCancelEdit 65311
-#define Consts_SmkcDel 65312
-#define Consts_SmkcShift 65313
-#define Consts_SmkcCtrl 65314
-#define Consts_SmkcAlt 65315
-#define Consts_SIconToClipboard 65316
-#define Consts_SDuplicateMenus 65317
-#define Consts_SDockedCtlNeedsName 65318
-#define Consts_SDockTreeRemoveError 65319
-#define Consts_SDockZoneNotFound 65320
-#define Consts_SDockZoneHasNoCtl 65321
-#define HelpIntfs_hNoTableOfContents 65322
-#define HelpIntfs_hNothingFound 65323
-#define HelpIntfs_hNoContext 65324
-#define HelpIntfs_hNoTopics 65325
-#define ErrorHandlingUnit_UM_FatalError 65326
-#define DBConsts_SBcdOverflow 65327
-#define Consts_SMsgDlgNoToAll 65328
-#define Consts_SMsgDlgYesToAll 65329
-#define Consts_SmkcBkSp 65330
-#define Consts_SmkcTab 65331
-#define Consts_SmkcEsc 65332
-#define Consts_SmkcEnter 65333
-#define Consts_SmkcSpace 65334
-#define Consts_SmkcPgUp 65335
-#define Consts_SmkcPgDn 65336
-#define Consts_SmkcEnd 65337
-#define Consts_SmkcHome 65338
-#define Consts_SmkcLeft 65339
-#define Consts_SmkcUp 65340
-#define Consts_SmkcRight 65341
-#define Consts_SmkcDown 65342
-#define Consts_SmkcIns 65343
-#define Consts_SVEnhMetafiles 65344
-#define Consts_SVIcons 65345
-#define Consts_SVBitmaps 65346
-#define Consts_SMsgDlgWarning 65347
-#define Consts_SMsgDlgError 65348
-#define Consts_SMsgDlgInformation 65349
-#define Consts_SMsgDlgConfirm 65350
-#define Consts_SMsgDlgYes 65351
-#define Consts_SMsgDlgNo 65352
-#define Consts_SMsgDlgOK 65353
-#define Consts_SMsgDlgCancel 65354
-#define Consts_SMsgDlgHelp 65355
-#define Consts_SMsgDlgAbort 65356
-#define Consts_SMsgDlgRetry 65357
-#define Consts_SMsgDlgIgnore 65358
-#define Consts_SMsgDlgAll 65359
-#define Consts_SNoTimers 65360
-#define Consts_SGroupIndexTooLow 65361
-#define Consts_SNoMDIForm 65362
-#define Consts_SControlParentSetToSelf 65363
-#define Consts_SOKButton 65364
-#define Consts_SCancelButton 65365
-#define Consts_SYesButton 65366
-#define Consts_SNoButton 65367
-#define Consts_SHelpButton 65368
-#define Consts_SCloseButton 65369
-#define Consts_SIgnoreButton 65370
-#define Consts_SRetryButton 65371
-#define Consts_SAbortButton 65372
-#define Consts_SAllButton 65373
-#define Consts_SCannotDragForm 65374
-#define Consts_SVMetafiles 65375
-#define Consts_SInvalidImageList 65376
-#define Consts_SReplaceImage 65377
-#define Consts_SImageIndexError 65378
-#define Consts_SImageReadFail 65379
-#define Consts_SImageWriteFail 65380
-#define Consts_SWindowDCError 65381
-#define Consts_SWindowClass 65382
-#define Consts_SCannotFocus 65383
-#define Consts_SParentRequired 65384
-#define Consts_SMDIChildNotVisible 65385
-#define Consts_SVisibleChanged 65386
-#define Consts_SCannotShowModal 65387
-#define Consts_SPropertyOutOfRange 65388
-#define Consts_SMenuIndexError 65389
-#define Consts_SMenuReinserted 65390
-#define Consts_SMenuNotFound 65391
-#define RTLConsts_SSortedListError 65392
-#define RTLConsts_SUnknownGroup 65393
-#define RTLConsts_SUnknownProperty 65394
-#define RTLConsts_SWriteError 65395
-#define RTLConsts_SThreadCreateError 65396
-#define RTLConsts_SThreadError 65397
-#define Consts_SInvalidBitmap 65398
-#define Consts_SInvalidIcon 65399
-#define Consts_SInvalidMetafile 65400
-#define Consts_SInvalidPixelFormat 65401
-#define Consts_SScanLine 65402
-#define Consts_SChangeIconSize 65403
-#define Consts_SUnknownClipboardFormat 65404
-#define Consts_SOutOfResources 65405
-#define Consts_SNoCanvasHandle 65406
-#define Consts_SInvalidImageSize 65407
-#define RTLConsts_SFOpenError 65408
-#define RTLConsts_SInvalidImage 65409
-#define RTLConsts_SInvalidName 65410
-#define RTLConsts_SInvalidPropertyElement 65411
-#define RTLConsts_SInvalidPropertyPath 65412
-#define RTLConsts_SInvalidPropertyType 65413
-#define RTLConsts_SInvalidPropertyValue 65414
-#define RTLConsts_SListCapacityError 65415
-#define RTLConsts_SListCountError 65416
-#define RTLConsts_SListIndexError 65417
-#define RTLConsts_SMemoryStreamError 65418
-#define RTLConsts_SPropertyException 65419
-#define RTLConsts_SReadError 65420
-#define RTLConsts_SReadOnlyProperty 65421
-#define RTLConsts_SResNotFound 65422
-#define RTLConsts_SSeekNotImplemented 65423
-#define SysConst_SLongDayNameTue 65424
-#define SysConst_SLongDayNameWed 65425
-#define SysConst_SLongDayNameThu 65426
-#define SysConst_SLongDayNameFri 65427
-#define SysConst_SLongDayNameSat 65428
-#define RTLConsts_SAncestorNotFound 65429
-#define RTLConsts_SAssignError 65430
-#define RTLConsts_SBitsIndexError 65431
-#define RTLConsts_SCantWriteResourceStreamError 65432
-#define RTLConsts_SCheckSynchronizeError 65433
-#define RTLConsts_SClassNotFound 65434
-#define RTLConsts_SDuplicateClass 65435
-#define RTLConsts_SDuplicateItem 65436
-#define RTLConsts_SDuplicateName 65437
-#define RTLConsts_SDuplicateString 65438
-#define RTLConsts_SFCreateError 65439
-#define SysConst_SLongMonthNameJun 65440
-#define SysConst_SLongMonthNameJul 65441
-#define SysConst_SLongMonthNameAug 65442
-#define SysConst_SLongMonthNameSep 65443
-#define SysConst_SLongMonthNameOct 65444
-#define SysConst_SLongMonthNameNov 65445
-#define SysConst_SLongMonthNameDec 65446
-#define SysConst_SShortDayNameSun 65447
-#define SysConst_SShortDayNameMon 65448
-#define SysConst_SShortDayNameTue 65449
-#define SysConst_SShortDayNameWed 65450
-#define SysConst_SShortDayNameThu 65451
-#define SysConst_SShortDayNameFri 65452
-#define SysConst_SShortDayNameSat 65453
-#define SysConst_SLongDayNameSun 65454
-#define SysConst_SLongDayNameMon 65455
-#define SysConst_SShortMonthNameFeb 65456
-#define SysConst_SShortMonthNameMar 65457
-#define SysConst_SShortMonthNameApr 65458
-#define SysConst_SShortMonthNameMay 65459
-#define SysConst_SShortMonthNameJun 65460
-#define SysConst_SShortMonthNameJul 65461
-#define SysConst_SShortMonthNameAug 65462
-#define SysConst_SShortMonthNameSep 65463
-#define SysConst_SShortMonthNameOct 65464
-#define SysConst_SShortMonthNameNov 65465
-#define SysConst_SShortMonthNameDec 65466
-#define SysConst_SLongMonthNameJan 65467
-#define SysConst_SLongMonthNameFeb 65468
-#define SysConst_SLongMonthNameMar 65469
-#define SysConst_SLongMonthNameApr 65470
-#define SysConst_SLongMonthNameMay 65471
-#define SysConst_SVarTypeConvertOverflow 65472
-#define SysConst_SVarOverflow 65473
-#define SysConst_SVarInvalid 65474
-#define SysConst_SVarBadType 65475
-#define SysConst_SVarNotImplemented 65476
-#define SysConst_SVarUnexpected 65477
-#define SysConst_SExternalException 65478
-#define SysConst_SAssertionFailed 65479
-#define SysConst_SIntfCastError 65480
-#define SysConst_SSafecallException 65481
-#define SysConst_SAssertError 65482
-#define SysConst_SAbstractError 65483
-#define SysConst_SModuleAccessViolation 65484
-#define SysConst_SOSError 65485
-#define SysConst_SUnkOSError 65486
-#define SysConst_SShortMonthNameJan 65487
+#define AbResString_AbTarBadFileNameS 65232
+#define AbResString_AbTarBadLinkNameS 65233
+#define AbResString_AbTarBadOpS 65234
+#define AbResString_AbUnhandledEntityS 65235
+#define AbResString_AbSWSNotEndofStreamS 65248
+#define AbResString_AbSWSSeekFailedS 65249
+#define AbResString_AbSWSWriteFailedS 65250
+#define AbResString_AbSWSInvalidOriginS 65251
+#define AbResString_AbSWSInvalidNewOriginS 65252
+#define AbResString_AbLtAddS 65253
+#define AbResString_AbLtDeleteS 65254
+#define AbResString_AbLtExtractS 65255
+#define AbResString_AbLtFreshenS 65256
+#define AbResString_AbLtMoveS 65257
+#define AbResString_AbLtReplaceS 65258
+#define AbResString_AbLtStartS 65259
+#define AbResString_AbGzipInvalidS 65260
+#define AbResString_AbGzipBadCRCS 65261
+#define AbResString_AbGzipBadFileSizeS 65262
+#define AbResString_AbTarInvalidS 65263
+#define AbResString_AbFCIFlushFolderErrorS 65264
+#define AbResString_AbFDICopyErrorS 65265
+#define AbResString_AbFDICreateErrorS 65266
+#define AbResString_AbInvalidCabTemplateS 65267
+#define AbResString_AbInvalidCabFileS 65268
+#define AbResString_AbVMSReadTooManyBytesS 65269
+#define AbResString_AbVMSInvalidOriginS 65270
+#define AbResString_AbVMSErrorOpenSwapS 65271
+#define AbResString_AbVMSSeekFailS 65272
+#define AbResString_AbVMSReadFailS 65273
+#define AbResString_AbVMSWriteFailS 65274
+#define AbResString_AbVMSWriteTooManyBytesS 65275
+#define AbResString_AbBBSReadTooManyBytesS 65276
+#define AbResString_AbBBSSeekOutsideBufferS 65277
+#define AbResString_AbBBSInvalidOriginS 65278
+#define AbResString_AbBBSWriteTooManyBytesS 65279
+#define AbResString_AbReadErrorS 65280
+#define AbResString_AbInvalidIndexS 65281
+#define AbResString_AbInvalidThresholdS 65282
+#define AbResString_AbUnhandledFileTypeS 65283
+#define AbResString_AbSpanningNotSupportedS 65284
+#define AbResString_AbFileSizeTooBigS 65285
+#define AbResString_AbNoCabinetDllErrorS 65286
+#define AbResString_AbFCIFileOpenErrorS 65287
+#define AbResString_AbFCIFileReadErrorS 65288
+#define AbResString_AbFCIFileWriteErrorS 65289
+#define AbResString_AbFCIFileCloseErrorS 65290
+#define AbResString_AbFCIFileSeekErrorS 65291
+#define AbResString_AbFCIFileDeleteErrorS 65292
+#define AbResString_AbFCIAddFileErrorS 65293
+#define AbResString_AbFCICreateErrorS 65294
+#define AbResString_AbFCIFlushCabinetErrorS 65295
+#define AbResString_AbUnsupportedCompressionMethodS 65296
+#define AbResString_AbUserAbortS 65297
+#define AbResString_AbArchiveBusyS 65298
+#define AbResString_AbBadSpanStreamS 65299
+#define AbResString_AbNoOverwriteSpanStreamS 65300
+#define AbResString_AbNoSpannedSelfExtractS 65301
+#define AbResString_AbStreamFullS 65302
+#define AbResString_AbNoSuchDirectoryS 65303
+#define AbResString_AbInflateBlockErrorS 65304
+#define AbResString_AbBadStreamTypeS 65305
+#define AbResString_AbTruncateErrorS 65306
+#define AbResString_AbZipBadCRCS 65307
+#define AbResString_AbZipBadStubS 65308
+#define AbResString_AbFileNotFoundS 65309
+#define AbResString_AbInvalidLFHS 65310
+#define AbResString_AbNoArchiveS 65311
+#define Consts_SDockedCtlNeedsName 65312
+#define Consts_SDockTreeRemoveError 65313
+#define Consts_SDockZoneNotFound 65314
+#define Consts_SDockZoneHasNoCtl 65315
+#define HelpIntfs_hNoTableOfContents 65316
+#define HelpIntfs_hNothingFound 65317
+#define HelpIntfs_hNoContext 65318
+#define HelpIntfs_hNoTopics 65319
+#define AbResString_AbErrZipInvalidS 65320
+#define AbResString_AbZipVersionNeededS 65321
+#define AbResString_AbUnknownCompressionMethodS 65322
+#define AbResString_AbNoExtractionMethodS 65323
+#define AbResString_AbInvalidPasswordS 65324
+#define AbResString_AbNoInsertionMethodS 65325
+#define AbResString_AbInvalidFactorS 65326
+#define AbResString_AbDuplicateNameS 65327
+#define Consts_SmkcSpace 65328
+#define Consts_SmkcPgUp 65329
+#define Consts_SmkcPgDn 65330
+#define Consts_SmkcEnd 65331
+#define Consts_SmkcHome 65332
+#define Consts_SmkcLeft 65333
+#define Consts_SmkcUp 65334
+#define Consts_SmkcRight 65335
+#define Consts_SmkcDown 65336
+#define Consts_SmkcIns 65337
+#define Consts_SmkcDel 65338
+#define Consts_SmkcShift 65339
+#define Consts_SmkcCtrl 65340
+#define Consts_SmkcAlt 65341
+#define Consts_SIconToClipboard 65342
+#define Consts_SDuplicateMenus 65343
+#define Consts_SMsgDlgConfirm 65344
+#define Consts_SMsgDlgYes 65345
+#define Consts_SMsgDlgNo 65346
+#define Consts_SMsgDlgOK 65347
+#define Consts_SMsgDlgCancel 65348
+#define Consts_SMsgDlgHelp 65349
+#define Consts_SMsgDlgAbort 65350
+#define Consts_SMsgDlgRetry 65351
+#define Consts_SMsgDlgIgnore 65352
+#define Consts_SMsgDlgAll 65353
+#define Consts_SMsgDlgNoToAll 65354
+#define Consts_SMsgDlgYesToAll 65355
+#define Consts_SmkcBkSp 65356
+#define Consts_SmkcTab 65357
+#define Consts_SmkcEsc 65358
+#define Consts_SmkcEnter 65359
+#define Consts_SYesButton 65360
+#define Consts_SNoButton 65361
+#define Consts_SHelpButton 65362
+#define Consts_SCloseButton 65363
+#define Consts_SIgnoreButton 65364
+#define Consts_SRetryButton 65365
+#define Consts_SAbortButton 65366
+#define Consts_SAllButton 65367
+#define Consts_SCannotDragForm 65368
+#define Consts_SVMetafiles 65369
+#define Consts_SVEnhMetafiles 65370
+#define Consts_SVIcons 65371
+#define Consts_SVBitmaps 65372
+#define Consts_SMsgDlgWarning 65373
+#define Consts_SMsgDlgError 65374
+#define Consts_SMsgDlgInformation 65375
+#define Consts_SWindowClass 65376
+#define Consts_SCannotFocus 65377
+#define Consts_SParentRequired 65378
+#define Consts_SMDIChildNotVisible 65379
+#define Consts_SVisibleChanged 65380
+#define Consts_SCannotShowModal 65381
+#define Consts_SPropertyOutOfRange 65382
+#define Consts_SMenuIndexError 65383
+#define Consts_SMenuReinserted 65384
+#define Consts_SMenuNotFound 65385
+#define Consts_SNoTimers 65386
+#define Consts_SGroupIndexTooLow 65387
+#define Consts_SNoMDIForm 65388
+#define Consts_SControlParentSetToSelf 65389
+#define Consts_SOKButton 65390
+#define Consts_SCancelButton 65391
+#define Consts_SInvalidBitmap 65392
+#define Consts_SInvalidIcon 65393
+#define Consts_SInvalidMetafile 65394
+#define Consts_SInvalidPixelFormat 65395
+#define Consts_SScanLine 65396
+#define Consts_SChangeIconSize 65397
+#define Consts_SUnknownClipboardFormat 65398
+#define Consts_SOutOfResources 65399
+#define Consts_SNoCanvasHandle 65400
+#define Consts_SInvalidImageSize 65401
+#define Consts_SInvalidImageList 65402
+#define Consts_SReplaceImage 65403
+#define Consts_SImageIndexError 65404
+#define Consts_SImageReadFail 65405
+#define Consts_SImageWriteFail 65406
+#define Consts_SWindowDCError 65407
+#define RTLConsts_SInvalidPropertyValue 65408
+#define RTLConsts_SListCapacityError 65409
+#define RTLConsts_SListCountError 65410
+#define RTLConsts_SListIndexError 65411
+#define RTLConsts_SMemoryStreamError 65412
+#define RTLConsts_SPropertyException 65413
+#define RTLConsts_SReadError 65414
+#define RTLConsts_SReadOnlyProperty 65415
+#define RTLConsts_SResNotFound 65416
+#define RTLConsts_SSeekNotImplemented 65417
+#define RTLConsts_SSortedListError 65418
+#define RTLConsts_SUnknownGroup 65419
+#define RTLConsts_SUnknownProperty 65420
+#define RTLConsts_SWriteError 65421
+#define RTLConsts_SThreadCreateError 65422
+#define RTLConsts_SThreadError 65423
+#define SysConst_SLongDayNameSat 65424
+#define RTLConsts_SAncestorNotFound 65425
+#define RTLConsts_SAssignError 65426
+#define RTLConsts_SBitsIndexError 65427
+#define RTLConsts_SCantWriteResourceStreamError 65428
+#define RTLConsts_SCheckSynchronizeError 65429
+#define RTLConsts_SClassNotFound 65430
+#define RTLConsts_SDuplicateClass 65431
+#define RTLConsts_SDuplicateItem 65432
+#define RTLConsts_SDuplicateName 65433
+#define RTLConsts_SDuplicateString 65434
+#define RTLConsts_SFCreateError 65435
+#define RTLConsts_SFOpenError 65436
+#define RTLConsts_SInvalidImage 65437
+#define RTLConsts_SInvalidName 65438
+#define RTLConsts_SInvalidPropertyPath 65439
+#define SysConst_SLongMonthNameOct 65440
+#define SysConst_SLongMonthNameNov 65441
+#define SysConst_SLongMonthNameDec 65442
+#define SysConst_SShortDayNameSun 65443
+#define SysConst_SShortDayNameMon 65444
+#define SysConst_SShortDayNameTue 65445
+#define SysConst_SShortDayNameWed 65446
+#define SysConst_SShortDayNameThu 65447
+#define SysConst_SShortDayNameFri 65448
+#define SysConst_SShortDayNameSat 65449
+#define SysConst_SLongDayNameSun 65450
+#define SysConst_SLongDayNameMon 65451
+#define SysConst_SLongDayNameTue 65452
+#define SysConst_SLongDayNameWed 65453
+#define SysConst_SLongDayNameThu 65454
+#define SysConst_SLongDayNameFri 65455
+#define SysConst_SShortMonthNameJun 65456
+#define SysConst_SShortMonthNameJul 65457
+#define SysConst_SShortMonthNameAug 65458
+#define SysConst_SShortMonthNameSep 65459
+#define SysConst_SShortMonthNameOct 65460
+#define SysConst_SShortMonthNameNov 65461
+#define SysConst_SShortMonthNameDec 65462
+#define SysConst_SLongMonthNameJan 65463
+#define SysConst_SLongMonthNameFeb 65464
+#define SysConst_SLongMonthNameMar 65465
+#define SysConst_SLongMonthNameApr 65466
+#define SysConst_SLongMonthNameMay 65467
+#define SysConst_SLongMonthNameJun 65468
+#define SysConst_SLongMonthNameJul 65469
+#define SysConst_SLongMonthNameAug 65470
+#define SysConst_SLongMonthNameSep 65471
+#define SysConst_SVarNotImplemented 65472
+#define SysConst_SVarUnexpected 65473
+#define SysConst_SExternalException 65474
+#define SysConst_SAssertionFailed 65475
+#define SysConst_SIntfCastError 65476
+#define SysConst_SSafecallException 65477
+#define SysConst_SAssertError 65478
+#define SysConst_SAbstractError 65479
+#define SysConst_SModuleAccessViolation 65480
+#define SysConst_SOSError 65481
+#define SysConst_SUnkOSError 65482
+#define SysConst_SShortMonthNameJan 65483
+#define SysConst_SShortMonthNameFeb 65484
+#define SysConst_SShortMonthNameMar 65485
+#define SysConst_SShortMonthNameApr 65486
+#define SysConst_SShortMonthNameMay 65487
 #define SysConst_SReadAccess 65488
 #define SysConst_SWriteAccess 65489
 #define SysConst_SFormatTooLong 65490
@@ -288,12 +262,12 @@
 #define SysConst_SInvalidVarOp 65495
 #define SysConst_SInvalidVarOpWithHResult 65496
 #define SysConst_SVarNotArray 65497
-#define SysConst_SVarTypeOutOfRange 65498
-#define SysConst_SVarTypeAlreadyUsed 65499
-#define SysConst_SVarTypeNotUsable 65500
-#define SysConst_SVarTypeTooManyCustom 65501
-#define SysConst_SInvalidVarNullOp 65502
-#define SysConst_SVarTypeCouldNotConvert 65503
+#define SysConst_SInvalidVarNullOp 65498
+#define SysConst_SVarTypeCouldNotConvert 65499
+#define SysConst_SVarTypeConvertOverflow 65500
+#define SysConst_SVarOverflow 65501
+#define SysConst_SVarInvalid 65502
+#define SysConst_SVarBadType 65503
 #define SysConst_SInvalidOp 65504
 #define SysConst_SZeroDivide 65505
 #define SysConst_SOverflow 65506
@@ -328,6 +302,16 @@
 #define SysConst_SIntOverflow 65535
 STRINGTABLE
 BEGIN
+	AbResString_AbTarBadFileNameS,	"File Name too long"
+	AbResString_AbTarBadLinkNameS,	"Link Name too long"
+	AbResString_AbTarBadOpS,	"Unsupported Operation"
+	AbResString_AbUnhandledEntityS,	"Unhandled Entity"
+	AbResString_AbSWSNotEndofStreamS,	"TabSlidingWindowStream.Write: Not at end of stream"
+	AbResString_AbSWSSeekFailedS,	"TabSlidingWindowStream.bsWriteChunk: seek failed"
+	AbResString_AbSWSWriteFailedS,	"TabSlidingWindowStream.bsWriteChunk: write failed"
+	AbResString_AbSWSInvalidOriginS,	"TabSlidingWindowStream.Seek: invalid origin"
+	AbResString_AbSWSInvalidNewOriginS,	"TabSlidingWindowStream.Seek: invalid new position"
+	AbResString_AbLtAddS,	" added "
 	AbResString_AbLtDeleteS,	" deleted "
 	AbResString_AbLtExtractS,	" extracted "
 	AbResString_AbLtFreshenS,	" freshened "
@@ -338,10 +322,12 @@ BEGIN
 	AbResString_AbGzipBadCRCS,	"Bad CRC"
 	AbResString_AbGzipBadFileSizeS,	"Bad File Size"
 	AbResString_AbTarInvalidS,	"Invalid Tar"
-	AbResString_AbTarBadFileNameS,	"File Name too long"
-	AbResString_AbTarBadLinkNameS,	"Link Name too long"
-	AbResString_AbTarBadOpS,	"Unsupported Operation"
-	AbResString_AbUnhandledEntityS,	"Unhandled Entity"
+	AbResString_AbFCIFlushFolderErrorS,	"FCI cannot flush folder"
+	AbResString_AbFDICopyErrorS,	"FDI cannot enumerate files"
+	AbResString_AbFDICreateErrorS,	"FDI cannot create context"
+	AbResString_AbInvalidCabTemplateS,	"Invalid cab file template"
+	AbResString_AbInvalidCabFileS,	"Invalid file - not a cabinet file"
+	AbResString_AbVMSReadTooManyBytesS,	"VMS: request to read too many bytes [%d]"
 	AbResString_AbVMSInvalidOriginS,	"VMS: invalid origin %d, should be 0, 1, 2"
 	AbResString_AbVMSErrorOpenSwapS,	"VMS: Cannot open swap file %s"
 	AbResString_AbVMSSeekFailS,	"VMS: Failed to seek in swap file %s"
@@ -352,12 +338,12 @@ BEGIN
 	AbResString_AbBBSSeekOutsideBufferS,	"BBS: New position is outside the buffer"
 	AbResString_AbBBSInvalidOriginS,	"BBS: Invalid Origin value"
 	AbResString_AbBBSWriteTooManyBytesS,	"BBS: request to write too many bytes [%d]"
-	AbResString_AbSWSNotEndofStreamS,	"TabSlidingWindowStream.Write: Not at end of stream"
-	AbResString_AbSWSSeekFailedS,	"TabSlidingWindowStream.bsWriteChunk: seek failed"
-	AbResString_AbSWSWriteFailedS,	"TabSlidingWindowStream.bsWriteChunk: write failed"
-	AbResString_AbSWSInvalidOriginS,	"TabSlidingWindowStream.Seek: invalid origin"
-	AbResString_AbSWSInvalidNewOriginS,	"TabSlidingWindowStream.Seek: invalid new position"
-	AbResString_AbLtAddS,	" added "
+	AbResString_AbReadErrorS,	"Error reading archive"
+	AbResString_AbInvalidIndexS,	"Invalid archive item index"
+	AbResString_AbInvalidThresholdS,	"Invalid archive size threshold"
+	AbResString_AbUnhandledFileTypeS,	"Unhandled Archive Type"
+	AbResString_AbSpanningNotSupportedS,	"Spanning not supported by this Archive type"
+	AbResString_AbFileSizeTooBigS,	"File size is too big for archive type"
 	AbResString_AbNoCabinetDllErrorS,	"Cannot load cabinet.dll"
 	AbResString_AbFCIFileOpenErrorS,	"FCI cannot open file"
 	AbResString_AbFCIFileReadErrorS,	"FCI cannot read file"
@@ -368,12 +354,12 @@ BEGIN
 	AbResString_AbFCIAddFileErrorS,	"FCI cannot add file"
 	AbResString_AbFCICreateErrorS,	"FCI cannot create context"
 	AbResString_AbFCIFlushCabinetErrorS,	"FCI cannot flush cabinet"
-	AbResString_AbFCIFlushFolderErrorS,	"FCI cannot flush folder"
-	AbResString_AbFDICopyErrorS,	"FDI cannot enumerate files"
-	AbResString_AbFDICreateErrorS,	"FDI cannot create context"
-	AbResString_AbInvalidCabTemplateS,	"Invalid cab file template"
-	AbResString_AbInvalidCabFileS,	"Invalid file - not a cabinet file"
-	AbResString_AbVMSReadTooManyBytesS,	"VMS: request to read too many bytes [%d]"
+	AbResString_AbUnsupportedCompressionMethodS,	"Cannot insert file - unsupported compression method"
+	AbResString_AbUserAbortS,	"Process aborted by user"
+	AbResString_AbArchiveBusyS,	"Archive is busy - cannot process new requests"
+	AbResString_AbBadSpanStreamS,	"Spanned archives must be opened as file streams"
+	AbResString_AbNoOverwriteSpanStreamS,	"Cannot update an existing spanned disk set"
+	AbResString_AbNoSpannedSelfExtractS,	"Cannot make a self-extracting spanned disk set"
 	AbResString_AbStreamFullS,	"Stream write error"
 	AbResString_AbNoSuchDirectoryS,	"Directory does not exist"
 	AbResString_AbInflateBlockErrorS,	"Cannot inflate block"
@@ -384,50 +370,6 @@ BEGIN
 	AbResString_AbFileNotFoundS,	"File not found"
 	AbResString_AbInvalidLFHS,	"Invalid Local File Header entry"
 	AbResString_AbNoArchiveS,	"Archive does not exist - Filename is blank"
-	AbResString_AbReadErrorS,	"Error reading archive"
-	AbResString_AbInvalidIndexS,	"Invalid archive item index"
-	AbResString_AbInvalidThresholdS,	"Invalid archive size threshold"
-	AbResString_AbUnhandledFileTypeS,	"Unhandled Archive Type"
-	AbResString_AbSpanningNotSupportedS,	"Spanning not supported by this Archive type"
-	AbResString_AbFileSizeTooBigS,	"File size is too big for archive type"
-	VDBConsts_SRefreshRecord,	"Refresh data"
-	VDBConsts_SRemoteLogin,	"Remote Login"
-	AbResString_AbErrZipInvalidS,	"Invalid file - not a PKZip file"
-	AbResString_AbZipVersionNeededS,	"Cannot extract file - newer version required"
-	AbResString_AbUnknownCompressionMethodS,	"Cannot extract file - unsupported compression method"
-	AbResString_AbNoExtractionMethodS,	"Cannot extract file - no extraction support provided"
-	AbResString_AbInvalidPasswordS,	"Cannot extract file - invalid password"
-	AbResString_AbNoInsertionMethodS,	"Cannot insert file - no insertion support provided"
-	AbResString_AbInvalidFactorS,	"Invalid Reduce Factor"
-	AbResString_AbDuplicateNameS,	"Cannot insert file - duplicates stored name"
-	AbResString_AbUnsupportedCompressionMethodS,	"Cannot insert file - unsupported compression method"
-	AbResString_AbUserAbortS,	"Process aborted by user"
-	AbResString_AbArchiveBusyS,	"Archive is busy - cannot process new requests"
-	AbResString_AbBadSpanStreamS,	"Spanned archives must be opened as file streams"
-	AbResString_AbNoOverwriteSpanStreamS,	"Cannot update an existing spanned disk set"
-	AbResString_AbNoSpannedSelfExtractS,	"Cannot make a self-extracting spanned disk set"
-	DBConsts_SInvalidBcdValue,	"%s is not a valid BCD value"
-	DBConsts_SCouldNotParseTimeStamp,	"Could not parse SQL TimeStamp string"
-	DBConsts_SInvalidSqlTimeStamp,	"Invalid SQL date/time values"
-	ComConst_SOleError,	"OLE error %.8x"
-	ComConst_SNoMethod,	"Method '%s' not supported by automation object"
-	ComConst_SVarNotObject,	"Variant does not reference an automation object"
-	ComConst_STooManyParams,	"Dispatch methods do not support more than 64 parameters"
-	VDBConsts_SFirstRecord,	"First record"
-	VDBConsts_SPriorRecord,	"Prior record"
-	VDBConsts_SNextRecord,	"Next record"
-	VDBConsts_SLastRecord,	"Last record"
-	VDBConsts_SInsertRecord,	"Insert record"
-	VDBConsts_SDeleteRecord,	"Delete record"
-	VDBConsts_SEditRecord,	"Edit record"
-	VDBConsts_SPostEdit,	"Post edit"
-	VDBConsts_SCancelEdit,	"Cancel edit"
-	Consts_SmkcDel,	"Del"
-	Consts_SmkcShift,	"Shift+"
-	Consts_SmkcCtrl,	"Ctrl+"
-	Consts_SmkcAlt,	"Alt+"
-	Consts_SIconToClipboard,	"Clipboard does not support Icons"
-	Consts_SDuplicateMenus,	"Menu '%s' is already being used by another form"
 	Consts_SDockedCtlNeedsName,	"Docked control must have a name"
 	Consts_SDockTreeRemoveError,	"Error removing control from dock tree"
 	Consts_SDockZoneNotFound,	" - Dock zone not found"
@@ -436,14 +378,14 @@ BEGIN
 	HelpIntfs_hNothingFound,	"No help found for %s"
 	HelpIntfs_hNoContext,	"No context-sensitive help installed"
 	HelpIntfs_hNoTopics,	"No topic-based help system installed"
-	ErrorHandlingUnit_UM_FatalError,	"Извините, произошла ошибка приложения!\r\nПередайте, пожалуйста, описание ошибки \r\nв компанию \"Информконтакт\"."
-	DBConsts_SBcdOverflow,	"BCD overflow"
-	Consts_SMsgDlgNoToAll,	"N&o to All"
-	Consts_SMsgDlgYesToAll,	"Yes to &All"
-	Consts_SmkcBkSp,	"BkSp"
-	Consts_SmkcTab,	"Tab"
-	Consts_SmkcEsc,	"Esc"
-	Consts_SmkcEnter,	"Enter"
+	AbResString_AbErrZipInvalidS,	"Invalid file - not a PKZip file"
+	AbResString_AbZipVersionNeededS,	"Cannot extract file - newer version required"
+	AbResString_AbUnknownCompressionMethodS,	"Cannot extract file - unsupported compression method"
+	AbResString_AbNoExtractionMethodS,	"Cannot extract file - no extraction support provided"
+	AbResString_AbInvalidPasswordS,	"Cannot extract file - invalid password"
+	AbResString_AbNoInsertionMethodS,	"Cannot insert file - no insertion support provided"
+	AbResString_AbInvalidFactorS,	"Invalid Reduce Factor"
+	AbResString_AbDuplicateNameS,	"Cannot insert file - duplicates stored name"
 	Consts_SmkcSpace,	"Space"
 	Consts_SmkcPgUp,	"PgUp"
 	Consts_SmkcPgDn,	"PgDn"
@@ -454,12 +396,12 @@ BEGIN
 	Consts_SmkcRight,	"Right"
 	Consts_SmkcDown,	"Down"
 	Consts_SmkcIns,	"Ins"
-	Consts_SVEnhMetafiles,	"Enhanced Metafiles"
-	Consts_SVIcons,	"Icons"
-	Consts_SVBitmaps,	"Bitmaps"
-	Consts_SMsgDlgWarning,	"Warning"
-	Consts_SMsgDlgError,	"Error"
-	Consts_SMsgDlgInformation,	"Information"
+	Consts_SmkcDel,	"Del"
+	Consts_SmkcShift,	"Shift+"
+	Consts_SmkcCtrl,	"Ctrl+"
+	Consts_SmkcAlt,	"Alt+"
+	Consts_SIconToClipboard,	"Clipboard does not support Icons"
+	Consts_SDuplicateMenus,	"Menu '%s' is already being used by another form"
 	Consts_SMsgDlgConfirm,	"Confirm"
 	Consts_SMsgDlgYes,	"&Yes"
 	Consts_SMsgDlgNo,	"&No"
@@ -470,12 +412,12 @@ BEGIN
 	Consts_SMsgDlgRetry,	"&Retry"
 	Consts_SMsgDlgIgnore,	"&Ignore"
 	Consts_SMsgDlgAll,	"&All"
-	Consts_SNoTimers,	"Not enough timers available"
-	Consts_SGroupIndexTooLow,	"GroupIndex cannot be less than a previous menu item's GroupIndex"
-	Consts_SNoMDIForm,	"Cannot create form. No MDI forms are currently active"
-	Consts_SControlParentSetToSelf,	"A control cannot have itself as its parent"
-	Consts_SOKButton,	"OK"
-	Consts_SCancelButton,	"Cancel"
+	Consts_SMsgDlgNoToAll,	"N&o to All"
+	Consts_SMsgDlgYesToAll,	"Yes to &All"
+	Consts_SmkcBkSp,	"BkSp"
+	Consts_SmkcTab,	"Tab"
+	Consts_SmkcEsc,	"Esc"
+	Consts_SmkcEnter,	"Enter"
 	Consts_SYesButton,	"&Yes"
 	Consts_SNoButton,	"&No"
 	Consts_SHelpButton,	"&Help"
@@ -486,12 +428,12 @@ BEGIN
 	Consts_SAllButton,	"&All"
 	Consts_SCannotDragForm,	"Cannot drag a form"
 	Consts_SVMetafiles,	"Metafiles"
-	Consts_SInvalidImageList,	"Invalid ImageList"
-	Consts_SReplaceImage,	"Unable to Replace Image"
-	Consts_SImageIndexError,	"Invalid ImageList Index"
-	Consts_SImageReadFail,	"Failed to read ImageList data from stream"
-	Consts_SImageWriteFail,	"Failed to write ImageList data to stream"
-	Consts_SWindowDCError,	"Error creating window device context"
+	Consts_SVEnhMetafiles,	"Enhanced Metafiles"
+	Consts_SVIcons,	"Icons"
+	Consts_SVBitmaps,	"Bitmaps"
+	Consts_SMsgDlgWarning,	"Warning"
+	Consts_SMsgDlgError,	"Error"
+	Consts_SMsgDlgInformation,	"Information"
 	Consts_SWindowClass,	"Error creating window class"
 	Consts_SCannotFocus,	"Cannot focus a disabled or invisible window"
 	Consts_SParentRequired,	"Control '%s' has no parent window"
@@ -502,12 +444,12 @@ BEGIN
 	Consts_SMenuIndexError,	"Menu index out of range"
 	Consts_SMenuReinserted,	"Menu inserted twice"
 	Consts_SMenuNotFound,	"Sub-menu is not in menu"
-	RTLConsts_SSortedListError,	"Operation not allowed on sorted list"
-	RTLConsts_SUnknownGroup,	"%s not in a class registration group"
-	RTLConsts_SUnknownProperty,	"Property %s does not exist"
-	RTLConsts_SWriteError,	"Stream write error"
-	RTLConsts_SThreadCreateError,	"Thread creation error: %s"
-	RTLConsts_SThreadError,	"Thread Error: %s (%d)"
+	Consts_SNoTimers,	"Not enough timers available"
+	Consts_SGroupIndexTooLow,	"GroupIndex cannot be less than a previous menu item's GroupIndex"
+	Consts_SNoMDIForm,	"Cannot create form. No MDI forms are currently active"
+	Consts_SControlParentSetToSelf,	"A control cannot have itself as its parent"
+	Consts_SOKButton,	"OK"
+	Consts_SCancelButton,	"Cancel"
 	Consts_SInvalidBitmap,	"Bitmap image is not valid"
 	Consts_SInvalidIcon,	"Icon image is not valid"
 	Consts_SInvalidMetafile,	"Metafile is not valid"
@@ -518,12 +460,12 @@ BEGIN
 	Consts_SOutOfResources,	"Out of system resources"
 	Consts_SNoCanvasHandle,	"Canvas does not allow drawing"
 	Consts_SInvalidImageSize,	"Invalid image size"
-	RTLConsts_SFOpenError,	"Cannot open file %s"
-	RTLConsts_SInvalidImage,	"Invalid stream format"
-	RTLConsts_SInvalidName,	"''%s'' is not a valid component name"
-	RTLConsts_SInvalidPropertyElement,	"Invalid property element: %s"
-	RTLConsts_SInvalidPropertyPath,	"Invalid property path"
-	RTLConsts_SInvalidPropertyType,	"Invalid property type: %s"
+	Consts_SInvalidImageList,	"Invalid ImageList"
+	Consts_SReplaceImage,	"Unable to Replace Image"
+	Consts_SImageIndexError,	"Invalid ImageList Index"
+	Consts_SImageReadFail,	"Failed to read ImageList data from stream"
+	Consts_SImageWriteFail,	"Failed to write ImageList data to stream"
+	Consts_SWindowDCError,	"Error creating window device context"
 	RTLConsts_SInvalidPropertyValue,	"Invalid property value"
 	RTLConsts_SListCapacityError,	"List capacity out of bounds (%d)"
 	RTLConsts_SListCountError,	"List count out of bounds (%d)"
@@ -534,10 +476,12 @@ BEGIN
 	RTLConsts_SReadOnlyProperty,	"Property is read-only"
 	RTLConsts_SResNotFound,	"Resource %s not found"
 	RTLConsts_SSeekNotImplemented,	"%s.Seek not implemented"
-	SysConst_SLongDayNameTue,	"Tuesday"
-	SysConst_SLongDayNameWed,	"Wednesday"
-	SysConst_SLongDayNameThu,	"Thursday"
-	SysConst_SLongDayNameFri,	"Friday"
+	RTLConsts_SSortedListError,	"Operation not allowed on sorted list"
+	RTLConsts_SUnknownGroup,	"%s not in a class registration group"
+	RTLConsts_SUnknownProperty,	"Property %s does not exist"
+	RTLConsts_SWriteError,	"Stream write error"
+	RTLConsts_SThreadCreateError,	"Thread creation error: %s"
+	RTLConsts_SThreadError,	"Thread Error: %s (%d)"
 	SysConst_SLongDayNameSat,	"Saturday"
 	RTLConsts_SAncestorNotFound,	"Ancestor for '%s' not found"
 	RTLConsts_SAssignError,	"Cannot assign a %s to a %s"
@@ -550,10 +494,10 @@ BEGIN
 	RTLConsts_SDuplicateName,	"A component named %s already exists"
 	RTLConsts_SDuplicateString,	"String list does not allow duplicates"
 	RTLConsts_SFCreateError,	"Cannot create file %s"
-	SysConst_SLongMonthNameJun,	"June"
-	SysConst_SLongMonthNameJul,	"July"
-	SysConst_SLongMonthNameAug,	"August"
-	SysConst_SLongMonthNameSep,	"September"
+	RTLConsts_SFOpenError,	"Cannot open file %s"
+	RTLConsts_SInvalidImage,	"Invalid stream format"
+	RTLConsts_SInvalidName,	"''%s'' is not a valid component name"
+	RTLConsts_SInvalidPropertyPath,	"Invalid property path"
 	SysConst_SLongMonthNameOct,	"October"
 	SysConst_SLongMonthNameNov,	"November"
 	SysConst_SLongMonthNameDec,	"December"
@@ -566,10 +510,10 @@ BEGIN
 	SysConst_SShortDayNameSat,	"Sat"
 	SysConst_SLongDayNameSun,	"Sunday"
 	SysConst_SLongDayNameMon,	"Monday"
-	SysConst_SShortMonthNameFeb,	"Feb"
-	SysConst_SShortMonthNameMar,	"Mar"
-	SysConst_SShortMonthNameApr,	"Apr"
-	SysConst_SShortMonthNameMay,	"May"
+	SysConst_SLongDayNameTue,	"Tuesday"
+	SysConst_SLongDayNameWed,	"Wednesday"
+	SysConst_SLongDayNameThu,	"Thursday"
+	SysConst_SLongDayNameFri,	"Friday"
 	SysConst_SShortMonthNameJun,	"Jun"
 	SysConst_SShortMonthNameJul,	"Jul"
 	SysConst_SShortMonthNameAug,	"Aug"
@@ -582,10 +526,10 @@ BEGIN
 	SysConst_SLongMonthNameMar,	"March"
 	SysConst_SLongMonthNameApr,	"April"
 	SysConst_SLongMonthNameMay,	"May"
-	SysConst_SVarTypeConvertOverflow,	"Overflow while converting variant of type (%s) into type (%s)"
-	SysConst_SVarOverflow,	"Variant overflow"
-	SysConst_SVarInvalid,	"Invalid argument"
-	SysConst_SVarBadType,	"Invalid variant type"
+	SysConst_SLongMonthNameJun,	"June"
+	SysConst_SLongMonthNameJul,	"July"
+	SysConst_SLongMonthNameAug,	"August"
+	SysConst_SLongMonthNameSep,	"September"
 	SysConst_SVarNotImplemented,	"Operation not supported"
 	SysConst_SVarUnexpected,	"Unexpected variant error"
 	SysConst_SExternalException,	"External exception %x"
@@ -598,6 +542,10 @@ BEGIN
 	SysConst_SOSError,	"System Error.  Code: %d.\r\n%s"
 	SysConst_SUnkOSError,	"A call to an OS function failed"
 	SysConst_SShortMonthNameJan,	"Jan"
+	SysConst_SShortMonthNameFeb,	"Feb"
+	SysConst_SShortMonthNameMar,	"Mar"
+	SysConst_SShortMonthNameApr,	"Apr"
+	SysConst_SShortMonthNameMay,	"May"
 	SysConst_SReadAccess,	"Read"
 	SysConst_SWriteAccess,	"Write"
 	SysConst_SFormatTooLong,	"Format string too long"
@@ -608,12 +556,12 @@ BEGIN
 	SysConst_SInvalidVarOp,	"Invalid variant operation"
 	SysConst_SInvalidVarOpWithHResult,	"Invalid variant operation ($%.8x)"
 	SysConst_SVarNotArray,	"Variant is not an array"
-	SysConst_SVarTypeOutOfRange,	"Custom variant type (%.4x) is out of range"
-	SysConst_SVarTypeAlreadyUsed,	"Custom variant type (%.4x) already used by %s"
-	SysConst_SVarTypeNotUsable,	"Custom variant type (%.4x) is not usable"
-	SysConst_SVarTypeTooManyCustom,	"Too many custom variant types have been registered"
 	SysConst_SInvalidVarNullOp,	"Invalid NULL variant operation"
 	SysConst_SVarTypeCouldNotConvert,	"Could not convert variant of type (%s) into type (%s)"
+	SysConst_SVarTypeConvertOverflow,	"Overflow while converting variant of type (%s) into type (%s)"
+	SysConst_SVarOverflow,	"Variant overflow"
+	SysConst_SVarInvalid,	"Invalid argument"
+	SysConst_SVarBadType,	"Invalid variant type"
 	SysConst_SInvalidOp,	"Invalid floating point operation"
 	SysConst_SZeroDivide,	"Floating point division by zero"
 	SysConst_SOverflow,	"Floating point overflow"

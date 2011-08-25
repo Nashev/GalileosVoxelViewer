@@ -4,8 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, GoodSplitUnit, ExtCtrls, icControlLabelUnit, Spin, Contnrs,
-  ComCtrls;
+  Dialogs, StdCtrls, ExtCtrls, Spin, Contnrs,
+  ComCtrls, AppEvnts;
 
 type
   TVoxelSlice = class
@@ -50,7 +50,7 @@ type
   TMainForm = class(TForm)
     pnl1: TPanel;
     pnl2: TPanel;
-    spl1: TicSplitter;
+    spl1: TSplitter;
     edFileName: TEdit;
     btnR: TButton;
     img: TImage;
@@ -63,6 +63,8 @@ type
     cbMany: TCheckBox;
     imgPalette: TImage;
     imgPaletteIndicator: TImage;
+    edMultiplier: TSpinEdit;
+    ApplicationEvents: TApplicationEvents;
     procedure btnRClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure DrawModeChanged(Sender: TObject);
@@ -72,11 +74,15 @@ type
     procedure PaletteModeChanged(Sender: TObject);
     procedure imgMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
+    procedure ApplicationEventsIdle(Sender: TObject; var Done: Boolean);
   private
     VoxelArray: TVoxelArray;
     CoordCallBack:TVoxelToPixelPixelCoordTransformCallback;
     ColorCallback: TUpdatePixelColorCallback;
     CubeRect: TRect;
+    Multiplier: byte;
+    NeedDrawPalette: Boolean;
+    NeedDrawImage: Boolean;
     procedure DrawImage;
     procedure DrawPalette;
     procedure DrawPaletteIndicator(Visible: Boolean; Value: TVoxelValue);
@@ -138,7 +144,7 @@ begin
   //k := Voxel / MaxVoxelValue;
 
   // c   := Trunc(255 * k * 0.8 + TRGBQuad(APixel).rgbRed * (1-k) * 0.8);
-  c   := Trunc(min(255, TRGBQuad(APixel).rgbRed + 255 * k / n));
+  c   := Trunc(min(255, TRGBQuad(APixel).rgbRed + 255 * k / n * (Multiplier / 10)));
 
   TRGBQuad(APixel).rgbRed   := c;
   TRGBQuad(APixel).rgbGreen := c;
@@ -164,12 +170,11 @@ var
   ScreenBuffer: TBitmap;
   sc: ^TLine;
   RenderRect, ClipRect: TRect;
-  n: Integer;
-  Layer: Integer;
   i, j: Integer;
   ColorCallback: TUpdatePixelColorCallback;
 
 begin
+  Multiplier := edMultiplier.Value;
   ScreenBuffer := imgPalette.Picture.Bitmap;
   if cbMany.Checked then
     ColorCallback := UpdateMultiLayerColor
@@ -196,6 +201,7 @@ begin
           ColorCallback(sc[i], Trunc(MaxVoxelValue * j / ScreenBuffer.Height), Trunc(1 + edDeep.Value * i / ScreenBuffer.Width));
         end;
     end;
+  NeedDrawPalette := False;
   pnlImg.Invalidate;
   Application.ProcessMessages;
 end;
@@ -232,6 +238,7 @@ begin
     1: CoordCallback := YZ;
     2: CoordCallback := XZ;
   end;
+  Multiplier := edMultiplier.Value;
   if cbMany.Checked then
     ColorCallback := UpdateMultiLayerColor
   else
@@ -242,6 +249,7 @@ begin
     OffsetRect(CubeRect, X-255, Y-255);
 
   VoxelArray.Draw(tbLayer.SelStart, tbLayer.SelEnd, cbUp.Checked, CoordCallback, ColorCallback, CubeRect, img.Picture.Bitmap);
+  NeedDrawImage := False;
   pnlImg.Invalidate;
   Application.ProcessMessages;
 end;
@@ -254,13 +262,13 @@ end;
 
 procedure TMainForm.DrawModeChanged(Sender: TObject);
 begin
-  DrawImage;
+  NeedDrawImage := True;
 end;
 
 procedure TMainForm.PaletteModeChanged(Sender: TObject);
 begin
-  DrawPalette;
-  DrawImage;
+  NeedDrawPalette := True;
+  NeedDrawImage := True;
 end;
 
 procedure TMainForm.DrawPaletteIndicator(Visible: Boolean; Value: TVoxelValue);
@@ -430,6 +438,15 @@ procedure TPanel.Paint;
 begin
   if Name <> 'pnlImg' then
     inherited Paint;
+end;
+
+procedure TMainForm.ApplicationEventsIdle(Sender: TObject;
+  var Done: Boolean);
+begin
+  if NeedDrawPalette then
+    DrawPalette;
+  if NeedDrawImage then
+    DrawImage;
 end;
 
 end.

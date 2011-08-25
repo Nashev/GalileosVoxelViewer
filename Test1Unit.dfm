@@ -15,6 +15,13 @@ object MainForm: TMainForm
   OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
+  object spl1: TSplitter
+    Left = 165
+    Top = 37
+    Width = 4
+    Height = 547
+    Cursor = crHSplit
+  end
   object pnl1: TPanel
     Left = 0
     Top = 0
@@ -126,15 +133,17 @@ object MainForm: TMainForm
       TabOrder = 5
       OnClick = PaletteModeChanged
     end
-  end
-  object spl1: TicSplitter
-    Left = 165
-    Top = 37
-    Width = 4
-    Height = 547
-    Cursor = crHSplit
-    TabOrder = 2
-    Control = pnl2
+    object edMultiplier: TSpinEdit
+      Left = 60
+      Top = 184
+      Width = 81
+      Height = 22
+      MaxValue = 512
+      MinValue = 0
+      TabOrder = 6
+      Value = 10
+      OnChange = PaletteModeChanged
+    end
   end
   object pnlImg: TPanel
     Left = 169
@@ -144,7 +153,7 @@ object MainForm: TMainForm
     Align = alClient
     BevelOuter = bvNone
     FullRepaint = False
-    TabOrder = 3
+    TabOrder = 2
     OnResize = pnlImgResize
     object img: TImage
       Left = 0
@@ -168,5 +177,10 @@ object MainForm: TMainForm
       Height = 547
       Align = alRight
     end
+  end
+  object ApplicationEvents: TApplicationEvents
+    OnIdle = ApplicationEventsIdle
+    Left = 496
+    Top = 296
   end
 end

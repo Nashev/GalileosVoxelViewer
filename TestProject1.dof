@@ -15,7 +15,7 @@ K=0
 L=1
 M=0
 N=1
-O=0
+O=1
 P=1
 Q=0
 R=0
@@ -41,11 +41,11 @@ MaxStackSize=1048576
 ImageBase=4194304
 ExeDescription=
 [Directories]
-OutputDir=$(DelphiOutput)
-UnitOutputDir=$(DelphiUnitOutput)
+OutputDir=bin
+UnitOutputDir=dcu
 PackageDLLOutputDir=
 PackageDCPOutputDir=
-SearchPath=$(DELPHI)\Lib\Debug;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\FastCode;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressLibrary\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressCore Library\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressCommon Library\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressEditors Library 3\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressEditors Library 5\Sources\;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressGDI+ Library\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\XP Theme Manager\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressDataController\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressMemData\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressQuantumGrid 3\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressQuantumGrid 7\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressInspector\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressMasterView\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressFlowChart\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressLayout Control 3\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressPageControl 3\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressPivotGrid 2\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\DevExpress\ExpressExport Library 2\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\Envision.Image.Library\source;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\OracleOutsideInTechnology\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\dOPC;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\dOPC\com;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\dOPC\xml;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\EkRtf\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\SynEdit\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\RichView\RichView\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\RichView\RichViewActions\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\Doa\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\TDbf\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\Crystal\Sources;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\External\Assist;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\ic\Components;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\ic\Components\Graphics;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\ic\Forms;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\ic\Forms\System;$(DelphiProjectsRoot)\Alfa-Kernel\Client\Delphi\ic\Forms\Functional;$(DelphiProjectsRoot)\Alfa-eOffice\Client\Delphi\Forms;$(DelphiProjectsRoot)\Alfa-Salary\Client\Delphi\Components\DateFrame;$(DelphiProjectsRoot)\Alfa-Salary\Client\Delphi\Components\LUPanel;$(DelphiProjectsRoot)\IC-RadiationEcologicalMonitoring\Client\Delphi\Components\TeeChart\Sources;$(DelphiProjectsRoot)\Alfa-Common\Client\Delphi\Forms\НСИ;$(DelphiProjectsRoot)\Alfa-Common\Client\Delphi\Forms\GdsAndSrv;$(DelphiProjectsRoot)\Alfa-Common\Client\Delphi\Forms\Контрагенты;$(DelphiProjectsRoot)\Alfa-Payment\Client\Delphi\Frames;$(DelphiProjectsRoot)\Alfa-Payment\Client\Delphi\BaseForms;$(DelphiProjectsRoot)\Alfa-Payment\Client\Delphi\Forms;$(DelphiProjectsRoot)\Alfa-Stock\Client\Delphi\Forms
+SearchPath=$(DELPHI)\Lib\Debug
 Packages=rtl;vcl;dbrtl;adortl;vcldb;vclx;bdertl;vcldbx;ibxpress;dsnap;cds;bdecds;qrpt;visualclx;visualdbclx;dsnapcrba;dsnapcon;VclSmp;vclshlctrls;vclie;xmlrtl;inet;inetdbbde;inetdbxpress;inetdb;nmfast;webdsnap;websnap;soaprtl;dbexpress;dbxcds;indy;dclOffice2k;phGantTimePackage_D6;GanttSuiteVcl_D6;TeeUI86;Tee86;TeeDB86;Crystal85;OPC;rv;SynEditPkg;EnvisionImageLibrary;Assist;tDBF;ekRTFPkg;dx;doa;icComponents;icSLRComponents
 Conditionals=USE_RX_GIF;VCLFIXPACK_DEBUG;EUREKALOG;EUREKALOG_VER6
 DebugSourceDirs=
@@ -84,6 +84,21 @@ Comments=
 PrivateBuild=
 [Excluded Packages]
 c:\program files\borland\delphi6\Projects\Bpl\icDesigntimeCardConstructor.bpl=Alfa-System Designtime Card Constructor
+[HistoryLists\hlConditionals]
+Count=1
+Item0=USE_RX_GIF;VCLFIXPACK_DEBUG;EUREKALOG;EUREKALOG_VER6
+[HistoryLists\hlUnitAliases]
+Count=1
+Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
+[HistoryLists\hlSearchPath]
+Count=1
+Item0=$(DELPHI)\Lib\Debug
+[HistoryLists\hlUnitOutputDirectory]
+Count=1
+Item0=dcu
+[HistoryLists\hlOutputDirectorry]
+Count=1
+Item0=bin
 [Exception Log]
 EurekaLog Version=6024
 Activate=1
