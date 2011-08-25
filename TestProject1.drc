@@ -8,179 +8,180 @@
   resources were bound to the produced executable.
 */
 
-#define AbResString_AbLtExtractS 65216
-#define AbResString_AbLtFreshenS 65217
-#define AbResString_AbLtMoveS 65218
-#define AbResString_AbLtReplaceS 65219
-#define AbResString_AbLtStartS 65220
-#define AbResString_AbGzipInvalidS 65221
-#define AbResString_AbGzipBadCRCS 65222
-#define AbResString_AbGzipBadFileSizeS 65223
-#define AbResString_AbTarInvalidS 65224
-#define AbResString_AbTarBadFileNameS 65225
-#define AbResString_AbTarBadLinkNameS 65226
-#define AbResString_AbTarBadOpS 65227
-#define AbResString_AbUnhandledEntityS 65228
-#define AbResString_AbVMSErrorOpenSwapS 65232
-#define AbResString_AbVMSSeekFailS 65233
-#define AbResString_AbVMSReadFailS 65234
-#define AbResString_AbVMSWriteFailS 65235
-#define AbResString_AbVMSWriteTooManyBytesS 65236
-#define AbResString_AbBBSReadTooManyBytesS 65237
-#define AbResString_AbBBSSeekOutsideBufferS 65238
-#define AbResString_AbBBSInvalidOriginS 65239
-#define AbResString_AbBBSWriteTooManyBytesS 65240
-#define AbResString_AbSWSNotEndofStreamS 65241
-#define AbResString_AbSWSSeekFailedS 65242
-#define AbResString_AbSWSWriteFailedS 65243
-#define AbResString_AbSWSInvalidOriginS 65244
-#define AbResString_AbSWSInvalidNewOriginS 65245
-#define AbResString_AbLtAddS 65246
-#define AbResString_AbLtDeleteS 65247
-#define AbResString_AbFCIFileOpenErrorS 65248
-#define AbResString_AbFCIFileReadErrorS 65249
-#define AbResString_AbFCIFileWriteErrorS 65250
-#define AbResString_AbFCIFileCloseErrorS 65251
-#define AbResString_AbFCIFileSeekErrorS 65252
-#define AbResString_AbFCIFileDeleteErrorS 65253
-#define AbResString_AbFCIAddFileErrorS 65254
-#define AbResString_AbFCICreateErrorS 65255
-#define AbResString_AbFCIFlushCabinetErrorS 65256
-#define AbResString_AbFCIFlushFolderErrorS 65257
-#define AbResString_AbFDICopyErrorS 65258
-#define AbResString_AbFDICreateErrorS 65259
-#define AbResString_AbInvalidCabTemplateS 65260
-#define AbResString_AbInvalidCabFileS 65261
-#define AbResString_AbVMSReadTooManyBytesS 65262
-#define AbResString_AbVMSInvalidOriginS 65263
-#define AbResString_AbNoSuchDirectoryS 65264
-#define AbResString_AbInflateBlockErrorS 65265
-#define AbResString_AbBadStreamTypeS 65266
-#define AbResString_AbTruncateErrorS 65267
-#define AbResString_AbZipBadCRCS 65268
-#define AbResString_AbZipBadStubS 65269
-#define AbResString_AbFileNotFoundS 65270
-#define AbResString_AbInvalidLFHS 65271
-#define AbResString_AbNoArchiveS 65272
-#define AbResString_AbReadErrorS 65273
-#define AbResString_AbInvalidIndexS 65274
-#define AbResString_AbInvalidThresholdS 65275
-#define AbResString_AbUnhandledFileTypeS 65276
-#define AbResString_AbSpanningNotSupportedS 65277
-#define AbResString_AbFileSizeTooBigS 65278
-#define AbResString_AbNoCabinetDllErrorS 65279
-#define VDBConsts_SRemoteLogin 65280
-#define AbResString_AbErrZipInvalidS 65281
-#define AbResString_AbZipVersionNeededS 65282
-#define AbResString_AbUnknownCompressionMethodS 65283
-#define AbResString_AbNoExtractionMethodS 65284
-#define AbResString_AbInvalidPasswordS 65285
-#define AbResString_AbNoInsertionMethodS 65286
-#define AbResString_AbInvalidFactorS 65287
-#define AbResString_AbDuplicateNameS 65288
-#define AbResString_AbUnsupportedCompressionMethodS 65289
-#define AbResString_AbUserAbortS 65290
-#define AbResString_AbArchiveBusyS 65291
-#define AbResString_AbBadSpanStreamS 65292
-#define AbResString_AbNoOverwriteSpanStreamS 65293
-#define AbResString_AbNoSpannedSelfExtractS 65294
-#define AbResString_AbStreamFullS 65295
-#define DBConsts_SCouldNotParseTimeStamp 65296
-#define DBConsts_SInvalidSqlTimeStamp 65297
-#define ComConst_SOleError 65298
-#define ComConst_SNoMethod 65299
-#define ComConst_SVarNotObject 65300
-#define ComConst_STooManyParams 65301
-#define VDBConsts_SFirstRecord 65302
-#define VDBConsts_SPriorRecord 65303
-#define VDBConsts_SNextRecord 65304
-#define VDBConsts_SLastRecord 65305
-#define VDBConsts_SInsertRecord 65306
-#define VDBConsts_SDeleteRecord 65307
-#define VDBConsts_SEditRecord 65308
-#define VDBConsts_SPostEdit 65309
-#define VDBConsts_SCancelEdit 65310
-#define VDBConsts_SRefreshRecord 65311
-#define Consts_SmkcShift 65312
-#define Consts_SmkcCtrl 65313
-#define Consts_SmkcAlt 65314
-#define Consts_SIconToClipboard 65315
-#define Consts_SDuplicateMenus 65316
-#define Consts_SDockedCtlNeedsName 65317
-#define Consts_SDockTreeRemoveError 65318
-#define Consts_SDockZoneNotFound 65319
-#define Consts_SDockZoneHasNoCtl 65320
-#define HelpIntfs_hNoTableOfContents 65321
-#define HelpIntfs_hNothingFound 65322
-#define HelpIntfs_hNoContext 65323
-#define HelpIntfs_hNoTopics 65324
-#define ErrorHandlingUnit_UM_FatalError 65325
-#define DBConsts_SBcdOverflow 65326
-#define DBConsts_SInvalidBcdValue 65327
-#define Consts_SMsgDlgYesToAll 65328
-#define Consts_SmkcBkSp 65329
-#define Consts_SmkcTab 65330
-#define Consts_SmkcEsc 65331
-#define Consts_SmkcEnter 65332
-#define Consts_SmkcSpace 65333
-#define Consts_SmkcPgUp 65334
-#define Consts_SmkcPgDn 65335
-#define Consts_SmkcEnd 65336
-#define Consts_SmkcHome 65337
-#define Consts_SmkcLeft 65338
-#define Consts_SmkcUp 65339
-#define Consts_SmkcRight 65340
-#define Consts_SmkcDown 65341
-#define Consts_SmkcIns 65342
-#define Consts_SmkcDel 65343
-#define Consts_SVIcons 65344
-#define Consts_SVBitmaps 65345
-#define Consts_SMsgDlgWarning 65346
-#define Consts_SMsgDlgError 65347
-#define Consts_SMsgDlgInformation 65348
-#define Consts_SMsgDlgConfirm 65349
-#define Consts_SMsgDlgYes 65350
-#define Consts_SMsgDlgNo 65351
-#define Consts_SMsgDlgOK 65352
-#define Consts_SMsgDlgCancel 65353
-#define Consts_SMsgDlgHelp 65354
-#define Consts_SMsgDlgAbort 65355
-#define Consts_SMsgDlgRetry 65356
-#define Consts_SMsgDlgIgnore 65357
-#define Consts_SMsgDlgAll 65358
-#define Consts_SMsgDlgNoToAll 65359
-#define Consts_SGroupIndexTooLow 65360
-#define Consts_SNoMDIForm 65361
-#define Consts_SControlParentSetToSelf 65362
-#define Consts_SOKButton 65363
-#define Consts_SCancelButton 65364
-#define Consts_SYesButton 65365
-#define Consts_SNoButton 65366
-#define Consts_SHelpButton 65367
-#define Consts_SCloseButton 65368
-#define Consts_SIgnoreButton 65369
-#define Consts_SRetryButton 65370
-#define Consts_SAbortButton 65371
-#define Consts_SAllButton 65372
-#define Consts_SCannotDragForm 65373
-#define Consts_SVMetafiles 65374
-#define Consts_SVEnhMetafiles 65375
+#define AbResString_AbLtDeleteS 65216
+#define AbResString_AbLtExtractS 65217
+#define AbResString_AbLtFreshenS 65218
+#define AbResString_AbLtMoveS 65219
+#define AbResString_AbLtReplaceS 65220
+#define AbResString_AbLtStartS 65221
+#define AbResString_AbGzipInvalidS 65222
+#define AbResString_AbGzipBadCRCS 65223
+#define AbResString_AbGzipBadFileSizeS 65224
+#define AbResString_AbTarInvalidS 65225
+#define AbResString_AbTarBadFileNameS 65226
+#define AbResString_AbTarBadLinkNameS 65227
+#define AbResString_AbTarBadOpS 65228
+#define AbResString_AbUnhandledEntityS 65229
+#define AbResString_AbVMSInvalidOriginS 65232
+#define AbResString_AbVMSErrorOpenSwapS 65233
+#define AbResString_AbVMSSeekFailS 65234
+#define AbResString_AbVMSReadFailS 65235
+#define AbResString_AbVMSWriteFailS 65236
+#define AbResString_AbVMSWriteTooManyBytesS 65237
+#define AbResString_AbBBSReadTooManyBytesS 65238
+#define AbResString_AbBBSSeekOutsideBufferS 65239
+#define AbResString_AbBBSInvalidOriginS 65240
+#define AbResString_AbBBSWriteTooManyBytesS 65241
+#define AbResString_AbSWSNotEndofStreamS 65242
+#define AbResString_AbSWSSeekFailedS 65243
+#define AbResString_AbSWSWriteFailedS 65244
+#define AbResString_AbSWSInvalidOriginS 65245
+#define AbResString_AbSWSInvalidNewOriginS 65246
+#define AbResString_AbLtAddS 65247
+#define AbResString_AbNoCabinetDllErrorS 65248
+#define AbResString_AbFCIFileOpenErrorS 65249
+#define AbResString_AbFCIFileReadErrorS 65250
+#define AbResString_AbFCIFileWriteErrorS 65251
+#define AbResString_AbFCIFileCloseErrorS 65252
+#define AbResString_AbFCIFileSeekErrorS 65253
+#define AbResString_AbFCIFileDeleteErrorS 65254
+#define AbResString_AbFCIAddFileErrorS 65255
+#define AbResString_AbFCICreateErrorS 65256
+#define AbResString_AbFCIFlushCabinetErrorS 65257
+#define AbResString_AbFCIFlushFolderErrorS 65258
+#define AbResString_AbFDICopyErrorS 65259
+#define AbResString_AbFDICreateErrorS 65260
+#define AbResString_AbInvalidCabTemplateS 65261
+#define AbResString_AbInvalidCabFileS 65262
+#define AbResString_AbVMSReadTooManyBytesS 65263
+#define AbResString_AbStreamFullS 65264
+#define AbResString_AbNoSuchDirectoryS 65265
+#define AbResString_AbInflateBlockErrorS 65266
+#define AbResString_AbBadStreamTypeS 65267
+#define AbResString_AbTruncateErrorS 65268
+#define AbResString_AbZipBadCRCS 65269
+#define AbResString_AbZipBadStubS 65270
+#define AbResString_AbFileNotFoundS 65271
+#define AbResString_AbInvalidLFHS 65272
+#define AbResString_AbNoArchiveS 65273
+#define AbResString_AbReadErrorS 65274
+#define AbResString_AbInvalidIndexS 65275
+#define AbResString_AbInvalidThresholdS 65276
+#define AbResString_AbUnhandledFileTypeS 65277
+#define AbResString_AbSpanningNotSupportedS 65278
+#define AbResString_AbFileSizeTooBigS 65279
+#define VDBConsts_SRefreshRecord 65280
+#define VDBConsts_SRemoteLogin 65281
+#define AbResString_AbErrZipInvalidS 65282
+#define AbResString_AbZipVersionNeededS 65283
+#define AbResString_AbUnknownCompressionMethodS 65284
+#define AbResString_AbNoExtractionMethodS 65285
+#define AbResString_AbInvalidPasswordS 65286
+#define AbResString_AbNoInsertionMethodS 65287
+#define AbResString_AbInvalidFactorS 65288
+#define AbResString_AbDuplicateNameS 65289
+#define AbResString_AbUnsupportedCompressionMethodS 65290
+#define AbResString_AbUserAbortS 65291
+#define AbResString_AbArchiveBusyS 65292
+#define AbResString_AbBadSpanStreamS 65293
+#define AbResString_AbNoOverwriteSpanStreamS 65294
+#define AbResString_AbNoSpannedSelfExtractS 65295
+#define DBConsts_SInvalidBcdValue 65296
+#define DBConsts_SCouldNotParseTimeStamp 65297
+#define DBConsts_SInvalidSqlTimeStamp 65298
+#define ComConst_SOleError 65299
+#define ComConst_SNoMethod 65300
+#define ComConst_SVarNotObject 65301
+#define ComConst_STooManyParams 65302
+#define VDBConsts_SFirstRecord 65303
+#define VDBConsts_SPriorRecord 65304
+#define VDBConsts_SNextRecord 65305
+#define VDBConsts_SLastRecord 65306
+#define VDBConsts_SInsertRecord 65307
+#define VDBConsts_SDeleteRecord 65308
+#define VDBConsts_SEditRecord 65309
+#define VDBConsts_SPostEdit 65310
+#define VDBConsts_SCancelEdit 65311
+#define Consts_SmkcDel 65312
+#define Consts_SmkcShift 65313
+#define Consts_SmkcCtrl 65314
+#define Consts_SmkcAlt 65315
+#define Consts_SIconToClipboard 65316
+#define Consts_SDuplicateMenus 65317
+#define Consts_SDockedCtlNeedsName 65318
+#define Consts_SDockTreeRemoveError 65319
+#define Consts_SDockZoneNotFound 65320
+#define Consts_SDockZoneHasNoCtl 65321
+#define HelpIntfs_hNoTableOfContents 65322
+#define HelpIntfs_hNothingFound 65323
+#define HelpIntfs_hNoContext 65324
+#define HelpIntfs_hNoTopics 65325
+#define ErrorHandlingUnit_UM_FatalError 65326
+#define DBConsts_SBcdOverflow 65327
+#define Consts_SMsgDlgNoToAll 65328
+#define Consts_SMsgDlgYesToAll 65329
+#define Consts_SmkcBkSp 65330
+#define Consts_SmkcTab 65331
+#define Consts_SmkcEsc 65332
+#define Consts_SmkcEnter 65333
+#define Consts_SmkcSpace 65334
+#define Consts_SmkcPgUp 65335
+#define Consts_SmkcPgDn 65336
+#define Consts_SmkcEnd 65337
+#define Consts_SmkcHome 65338
+#define Consts_SmkcLeft 65339
+#define Consts_SmkcUp 65340
+#define Consts_SmkcRight 65341
+#define Consts_SmkcDown 65342
+#define Consts_SmkcIns 65343
+#define Consts_SVEnhMetafiles 65344
+#define Consts_SVIcons 65345
+#define Consts_SVBitmaps 65346
+#define Consts_SMsgDlgWarning 65347
+#define Consts_SMsgDlgError 65348
+#define Consts_SMsgDlgInformation 65349
+#define Consts_SMsgDlgConfirm 65350
+#define Consts_SMsgDlgYes 65351
+#define Consts_SMsgDlgNo 65352
+#define Consts_SMsgDlgOK 65353
+#define Consts_SMsgDlgCancel 65354
+#define Consts_SMsgDlgHelp 65355
+#define Consts_SMsgDlgAbort 65356
+#define Consts_SMsgDlgRetry 65357
+#define Consts_SMsgDlgIgnore 65358
+#define Consts_SMsgDlgAll 65359
+#define Consts_SNoTimers 65360
+#define Consts_SGroupIndexTooLow 65361
+#define Consts_SNoMDIForm 65362
+#define Consts_SControlParentSetToSelf 65363
+#define Consts_SOKButton 65364
+#define Consts_SCancelButton 65365
+#define Consts_SYesButton 65366
+#define Consts_SNoButton 65367
+#define Consts_SHelpButton 65368
+#define Consts_SCloseButton 65369
+#define Consts_SIgnoreButton 65370
+#define Consts_SRetryButton 65371
+#define Consts_SAbortButton 65372
+#define Consts_SAllButton 65373
+#define Consts_SCannotDragForm 65374
+#define Consts_SVMetafiles 65375
 #define Consts_SInvalidImageList 65376
-#define Consts_SImageIndexError 65377
-#define Consts_SImageReadFail 65378
-#define Consts_SImageWriteFail 65379
-#define Consts_SWindowDCError 65380
-#define Consts_SWindowClass 65381
-#define Consts_SCannotFocus 65382
-#define Consts_SParentRequired 65383
-#define Consts_SMDIChildNotVisible 65384
-#define Consts_SVisibleChanged 65385
-#define Consts_SCannotShowModal 65386
-#define Consts_SPropertyOutOfRange 65387
-#define Consts_SMenuIndexError 65388
-#define Consts_SMenuReinserted 65389
-#define Consts_SMenuNotFound 65390
-#define Consts_SNoTimers 65391
+#define Consts_SReplaceImage 65377
+#define Consts_SImageIndexError 65378
+#define Consts_SImageReadFail 65379
+#define Consts_SImageWriteFail 65380
+#define Consts_SWindowDCError 65381
+#define Consts_SWindowClass 65382
+#define Consts_SCannotFocus 65383
+#define Consts_SParentRequired 65384
+#define Consts_SMDIChildNotVisible 65385
+#define Consts_SVisibleChanged 65386
+#define Consts_SCannotShowModal 65387
+#define Consts_SPropertyOutOfRange 65388
+#define Consts_SMenuIndexError 65389
+#define Consts_SMenuReinserted 65390
+#define Consts_SMenuNotFound 65391
 #define RTLConsts_SSortedListError 65392
 #define RTLConsts_SUnknownGroup 65393
 #define RTLConsts_SUnknownProperty 65394
@@ -327,6 +328,7 @@
 #define SysConst_SIntOverflow 65535
 STRINGTABLE
 BEGIN
+	AbResString_AbLtDeleteS,	" deleted "
 	AbResString_AbLtExtractS,	" extracted "
 	AbResString_AbLtFreshenS,	" freshened "
 	AbResString_AbLtMoveS,	" moved "
@@ -340,6 +342,7 @@ BEGIN
 	AbResString_AbTarBadLinkNameS,	"Link Name too long"
 	AbResString_AbTarBadOpS,	"Unsupported Operation"
 	AbResString_AbUnhandledEntityS,	"Unhandled Entity"
+	AbResString_AbVMSInvalidOriginS,	"VMS: invalid origin %d, should be 0, 1, 2"
 	AbResString_AbVMSErrorOpenSwapS,	"VMS: Cannot open swap file %s"
 	AbResString_AbVMSSeekFailS,	"VMS: Failed to seek in swap file %s"
 	AbResString_AbVMSReadFailS,	"VMS: Failed to read %d bytes from swap file %s"
@@ -355,7 +358,7 @@ BEGIN
 	AbResString_AbSWSInvalidOriginS,	"TabSlidingWindowStream.Seek: invalid origin"
 	AbResString_AbSWSInvalidNewOriginS,	"TabSlidingWindowStream.Seek: invalid new position"
 	AbResString_AbLtAddS,	" added "
-	AbResString_AbLtDeleteS,	" deleted "
+	AbResString_AbNoCabinetDllErrorS,	"Cannot load cabinet.dll"
 	AbResString_AbFCIFileOpenErrorS,	"FCI cannot open file"
 	AbResString_AbFCIFileReadErrorS,	"FCI cannot read file"
 	AbResString_AbFCIFileWriteErrorS,	"FCI cannot write file"
@@ -371,7 +374,7 @@ BEGIN
 	AbResString_AbInvalidCabTemplateS,	"Invalid cab file template"
 	AbResString_AbInvalidCabFileS,	"Invalid file - not a cabinet file"
 	AbResString_AbVMSReadTooManyBytesS,	"VMS: request to read too many bytes [%d]"
-	AbResString_AbVMSInvalidOriginS,	"VMS: invalid origin %d, should be 0, 1, 2"
+	AbResString_AbStreamFullS,	"Stream write error"
 	AbResString_AbNoSuchDirectoryS,	"Directory does not exist"
 	AbResString_AbInflateBlockErrorS,	"Cannot inflate block"
 	AbResString_AbBadStreamTypeS,	"Invalid Stream"
@@ -387,7 +390,7 @@ BEGIN
 	AbResString_AbUnhandledFileTypeS,	"Unhandled Archive Type"
 	AbResString_AbSpanningNotSupportedS,	"Spanning not supported by this Archive type"
 	AbResString_AbFileSizeTooBigS,	"File size is too big for archive type"
-	AbResString_AbNoCabinetDllErrorS,	"Cannot load cabinet.dll"
+	VDBConsts_SRefreshRecord,	"Refresh data"
 	VDBConsts_SRemoteLogin,	"Remote Login"
 	AbResString_AbErrZipInvalidS,	"Invalid file - not a PKZip file"
 	AbResString_AbZipVersionNeededS,	"Cannot extract file - newer version required"
@@ -403,7 +406,7 @@ BEGIN
 	AbResString_AbBadSpanStreamS,	"Spanned archives must be opened as file streams"
 	AbResString_AbNoOverwriteSpanStreamS,	"Cannot update an existing spanned disk set"
 	AbResString_AbNoSpannedSelfExtractS,	"Cannot make a self-extracting spanned disk set"
-	AbResString_AbStreamFullS,	"Stream write error"
+	DBConsts_SInvalidBcdValue,	"%s is not a valid BCD value"
 	DBConsts_SCouldNotParseTimeStamp,	"Could not parse SQL TimeStamp string"
 	DBConsts_SInvalidSqlTimeStamp,	"Invalid SQL date/time values"
 	ComConst_SOleError,	"OLE error %.8x"
@@ -419,7 +422,7 @@ BEGIN
 	VDBConsts_SEditRecord,	"Edit record"
 	VDBConsts_SPostEdit,	"Post edit"
 	VDBConsts_SCancelEdit,	"Cancel edit"
-	VDBConsts_SRefreshRecord,	"Refresh data"
+	Consts_SmkcDel,	"Del"
 	Consts_SmkcShift,	"Shift+"
 	Consts_SmkcCtrl,	"Ctrl+"
 	Consts_SmkcAlt,	"Alt+"
@@ -435,7 +438,7 @@ BEGIN
 	HelpIntfs_hNoTopics,	"No topic-based help system installed"
 	ErrorHandlingUnit_UM_FatalError,	"Извините, произошла ошибка приложения!\r\nПередайте, пожалуйста, описание ошибки \r\nв компанию \"Информконтакт\"."
 	DBConsts_SBcdOverflow,	"BCD overflow"
-	DBConsts_SInvalidBcdValue,	"%s is not a valid BCD value"
+	Consts_SMsgDlgNoToAll,	"N&o to All"
 	Consts_SMsgDlgYesToAll,	"Yes to &All"
 	Consts_SmkcBkSp,	"BkSp"
 	Consts_SmkcTab,	"Tab"
@@ -451,7 +454,7 @@ BEGIN
 	Consts_SmkcRight,	"Right"
 	Consts_SmkcDown,	"Down"
 	Consts_SmkcIns,	"Ins"
-	Consts_SmkcDel,	"Del"
+	Consts_SVEnhMetafiles,	"Enhanced Metafiles"
 	Consts_SVIcons,	"Icons"
 	Consts_SVBitmaps,	"Bitmaps"
 	Consts_SMsgDlgWarning,	"Warning"
@@ -467,7 +470,7 @@ BEGIN
 	Consts_SMsgDlgRetry,	"&Retry"
 	Consts_SMsgDlgIgnore,	"&Ignore"
 	Consts_SMsgDlgAll,	"&All"
-	Consts_SMsgDlgNoToAll,	"N&o to All"
+	Consts_SNoTimers,	"Not enough timers available"
 	Consts_SGroupIndexTooLow,	"GroupIndex cannot be less than a previous menu item's GroupIndex"
 	Consts_SNoMDIForm,	"Cannot create form. No MDI forms are currently active"
 	Consts_SControlParentSetToSelf,	"A control cannot have itself as its parent"
@@ -483,8 +486,8 @@ BEGIN
 	Consts_SAllButton,	"&All"
 	Consts_SCannotDragForm,	"Cannot drag a form"
 	Consts_SVMetafiles,	"Metafiles"
-	Consts_SVEnhMetafiles,	"Enhanced Metafiles"
 	Consts_SInvalidImageList,	"Invalid ImageList"
+	Consts_SReplaceImage,	"Unable to Replace Image"
 	Consts_SImageIndexError,	"Invalid ImageList Index"
 	Consts_SImageReadFail,	"Failed to read ImageList data from stream"
 	Consts_SImageWriteFail,	"Failed to write ImageList data to stream"
@@ -499,7 +502,6 @@ BEGIN
 	Consts_SMenuIndexError,	"Menu index out of range"
 	Consts_SMenuReinserted,	"Menu inserted twice"
 	Consts_SMenuNotFound,	"Sub-menu is not in menu"
-	Consts_SNoTimers,	"Not enough timers available"
 	RTLConsts_SSortedListError,	"Operation not allowed on sorted list"
 	RTLConsts_SUnknownGroup,	"%s not in a class registration group"
 	RTLConsts_SUnknownProperty,	"Property %s does not exist"

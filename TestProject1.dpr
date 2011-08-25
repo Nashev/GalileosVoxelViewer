@@ -3,7 +3,7 @@ program TestProject1;
 uses
   ExceptionLog,
   Forms,
-  Test1Unit in 'Test1Unit.pas' {Form1},
+  Test1Unit in 'Test1Unit.pas' {MainForm},
   AbGzTyp in 'Abbrevia 4.0\source\AbGzTyp.pas',
   AbUtils in 'Abbrevia 4.0\source\AbUtils.pas';
 
@@ -11,6 +11,6 @@ uses
 
 begin
   Application.Initialize;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.

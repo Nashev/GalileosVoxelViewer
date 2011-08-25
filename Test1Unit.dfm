@@ -1,9 +1,9 @@
-object Form1: TForm1
+object MainForm: TMainForm
   Left = 427
   Top = 236
   Width = 1022
   Height = 618
-  Caption = 'Form1'
+  Caption = 'GalileosVoxelViewer'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +11,7 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
@@ -51,15 +52,15 @@ object Form1: TForm1
   object pnl2: TPanel
     Left = 0
     Top = 37
-    Width = 185
+    Width = 165
     Height = 547
     Align = alLeft
     TabOrder = 1
-    object trckbr: TTrackBar
+    object tbLayer: TTrackBar
       Left = 8
       Top = 4
       Width = 45
-      Height = 533
+      Height = 497
       Max = 511
       Orientation = trVertical
       Frequency = 1
@@ -69,13 +70,13 @@ object Form1: TForm1
       TabOrder = 0
       TickMarks = tmBottomRight
       TickStyle = tsAuto
-      OnChange = trckbrChange
+      OnChange = DrawModeChanged
     end
     object rgAxis: TRadioGroup
-      Left = 68
+      Left = 52
       Top = 12
-      Width = 73
-      Height = 105
+      Width = 81
+      Height = 89
       Caption = #1057#1088#1077#1079
       ItemIndex = 0
       Items.Strings = (
@@ -83,11 +84,51 @@ object Form1: TForm1
         'YZ'
         'XZ')
       TabOrder = 1
-      OnClick = rgAxisClick
+      OnClick = DrawModeChanged
+    end
+    object edDeep: TSpinEdit
+      Left = 60
+      Top = 136
+      Width = 81
+      Height = 22
+      MaxValue = 512
+      MinValue = 0
+      TabOrder = 2
+      Value = 10
+      OnChange = PaletteModeChanged
+    end
+    object cbUp: TCheckBox
+      Left = 60
+      Top = 164
+      Width = 81
+      Height = 17
+      Caption = #1042#1087#1077#1088#1105#1076
+      TabOrder = 3
+      OnClick = DrawModeChanged
+    end
+    object edLayer: TSpinEdit
+      Left = 8
+      Top = 504
+      Width = 81
+      Height = 22
+      MaxValue = 512
+      MinValue = 0
+      TabOrder = 4
+      Value = 10
+      OnChange = edLayerChange
+    end
+    object cbMany: TCheckBox
+      Left = 52
+      Top = 112
+      Width = 81
+      Height = 17
+      Caption = #1055#1072#1095#1082#1091
+      TabOrder = 5
+      OnClick = PaletteModeChanged
     end
   end
   object spl1: TicSplitter
-    Left = 185
+    Left = 165
     Top = 37
     Width = 4
     Height = 547
@@ -96,18 +137,36 @@ object Form1: TForm1
     Control = pnl2
   end
   object pnlImg: TPanel
-    Left = 216
-    Top = 52
-    Width = 512
-    Height = 512
+    Left = 169
+    Top = 37
+    Width = 845
+    Height = 547
+    Align = alClient
     BevelOuter = bvNone
     FullRepaint = False
     TabOrder = 3
+    OnResize = pnlImgResize
     object img: TImage
       Left = 0
       Top = 0
-      Width = 512
-      Height = 512
+      Width = 754
+      Height = 547
+      Align = alClient
+      OnMouseMove = imgMouseMove
+    end
+    object imgPalette: TImage
+      Left = 764
+      Top = 0
+      Width = 81
+      Height = 547
+      Align = alRight
+    end
+    object imgPaletteIndicator: TImage
+      Left = 754
+      Top = 0
+      Width = 10
+      Height = 547
+      Align = alRight
     end
   end
 end
