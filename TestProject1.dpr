@@ -1,7 +1,6 @@
 program TestProject1;
 
 uses
-  ExceptionLog,
   Forms,
   Test1Unit in 'Test1Unit.pas' {MainForm},
   AbGzTyp in 'Abbrevia 4.0\source\AbGzTyp.pas',

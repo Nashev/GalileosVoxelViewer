@@ -47,7 +47,7 @@ PackageDLLOutputDir=
 PackageDCPOutputDir=
 SearchPath=$(DELPHI)\Lib\Debug
 Packages=rtl;vcl;dbrtl;adortl;vcldb;vclx;bdertl;vcldbx;ibxpress;dsnap;cds;bdecds;qrpt;visualclx;visualdbclx;dsnapcrba;dsnapcon;VclSmp;vclshlctrls;vclie;xmlrtl;inet;inetdbbde;inetdbxpress;inetdb;nmfast;webdsnap;websnap;soaprtl;dbexpress;dbxcds;indy;dclOffice2k;phGantTimePackage_D6;GanttSuiteVcl_D6;TeeUI86;Tee86;TeeDB86;Crystal85;OPC;rv;SynEditPkg;EnvisionImageLibrary;Assist;tDBF;ekRTFPkg;dx;doa;icComponents;icSLRComponents
-Conditionals=USE_RX_GIF;VCLFIXPACK_DEBUG;EUREKALOG;EUREKALOG_VER6
+Conditionals=USE_RX_GIF;VCLFIXPACK_DEBUG;
 DebugSourceDirs=
 UsePackages=0
 [Parameters]
@@ -101,7 +101,7 @@ Count=1
 Item0=bin
 [Exception Log]
 EurekaLog Version=6024
-Activate=1
+Activate=0
 Activate Handle=0
 Save Log File=1
 Foreground Tab=0

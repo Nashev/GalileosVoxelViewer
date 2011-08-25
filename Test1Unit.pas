@@ -8,6 +8,11 @@ uses
   ComCtrls, AppEvnts;
 
 type
+  TWaiting = class
+    class procedure Start;
+    class procedure Finish;
+  end;
+
   TVoxelSlice = class
   private
     FMemoryStream: TMemoryStream;
@@ -60,11 +65,13 @@ type
     edDeep: TSpinEdit;
     cbUp: TCheckBox;
     edLayer: TSpinEdit;
-    cbMany: TCheckBox;
     imgPalette: TImage;
     imgPaletteIndicator: TImage;
     edMultiplier: TSpinEdit;
     ApplicationEvents: TApplicationEvents;
+    btn1: TButton;
+    lbl1: TLabel;
+    rgDrawingMode: TRadioGroup;
     procedure btnRClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure DrawModeChanged(Sender: TObject);
@@ -75,6 +82,8 @@ type
     procedure imgMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
     procedure ApplicationEventsIdle(Sender: TObject; var Done: Boolean);
+    procedure btn1Click(Sender: TObject);
+    procedure tbLayerChange(Sender: TObject);
   private
     VoxelArray: TVoxelArray;
     CoordCallBack:TVoxelToPixelPixelCoordTransformCallback;
@@ -84,15 +93,16 @@ type
     NeedDrawPalette: Boolean;
     NeedDrawImage: Boolean;
     procedure DrawImage;
-    procedure DrawPalette;
+    procedure UpdatePalette;
     procedure DrawPaletteIndicator(Visible: Boolean; Value: TVoxelValue);
   public
     function XY(i, j, ALayer: Integer; ACubeRect: TRect): TVoxelCoords;
     function YZ(i, j, ALayer: Integer; ACubeRect: TRect): TVoxelCoords;
     function XZ(i, j, ALayer: Integer; ACubeRect: TRect): TVoxelCoords;
 
-    procedure UpdateMultiLayerColor (var APixel: TColor; Voxel: TVoxelValue; n: Integer);
     procedure UpdateSingleLayerColor(var APixel: TColor; Voxel: TVoxelValue; n: Integer);
+    procedure UpdateMultiLayerSummColor (var APixel: TColor; Voxel: TVoxelValue; n: Integer);
+    procedure UpdateMultiLayerFadeColor (var APixel: TColor; Voxel: TVoxelValue; n: Integer);
   end;
 
 var
@@ -118,12 +128,12 @@ function TMainForm.XY(i, j, ALayer: Integer; ACubeRect: TRect): TVoxelCoords;
 begin
   Result.X := max(0, min(511, i - ACubeRect.Left));
   Result.Y := max(0, min(511, 511 - (j - ACubeRect.Top)));
-  Result.Z := max(0, min(511, ALayer));
+  Result.Z := max(0, min(511, 511 - ALayer));
 end;
 
 function TMainForm.YZ(i, j, ALayer: Integer; ACubeRect: TRect): TVoxelCoords;
 begin
-  Result.X := max(0, min(511, ALayer));
+  Result.X := max(0, min(511, 511 - ALayer));
   Result.Y := max(0, min(511, i - ACubeRect.Left));
   Result.Z := max(0, min(511, 511 - (j - ACubeRect.Top)));
 end;
@@ -131,20 +141,35 @@ end;
 function TMainForm.XZ(i, j, ALayer: Integer; ACubeRect: TRect): TVoxelCoords;
 begin
   Result.X := max(0, min(511, i - ACubeRect.Left));
-  Result.Y := max(0, min(511, ALayer));
+  Result.Y := max(0, min(511, 511 - ALayer));
   Result.Z := max(0, min(511, 511 - (j - ACubeRect.Top)));
 end;
 
-procedure TMainForm.UpdateMultiLayerColor (var APixel: TColor; Voxel: TVoxelValue; n: Integer);
+procedure TMainForm.UpdateMultiLayerSummColor (var APixel: TColor; Voxel: TVoxelValue; n: Integer);
 var
   k: Single;
   c: Byte;
 begin
-  k := 3 * Voxel * Voxel / (MaxVoxelValue * MaxVoxelValue);
+  k := 3 * Voxel * Voxel / (MaxVoxelValue * MaxVoxelValue)  * (Multiplier / 10);
   //k := Voxel / MaxVoxelValue;
 
-  // c   := Trunc(255 * k * 0.8 + TRGBQuad(APixel).rgbRed * (1-k) * 0.8);
-  c   := Trunc(min(255, TRGBQuad(APixel).rgbRed + 255 * k / n * (Multiplier / 10)));
+  c   := Trunc(min(255, TRGBQuad(APixel).rgbRed + 255 * k / n));
+
+  TRGBQuad(APixel).rgbRed   := c;
+  TRGBQuad(APixel).rgbGreen := c;
+  TRGBQuad(APixel).rgbBlue  := c;
+  TRGBQuad(APixel).rgbReserved := 0;
+end;
+
+procedure TMainForm.UpdateMultiLayerFadeColor (var APixel: TColor; Voxel: TVoxelValue; n: Integer);
+var
+  k: Single;
+  c: Byte;
+begin
+  k := 3 * Voxel * Voxel / (MaxVoxelValue * MaxVoxelValue) * (Multiplier / 100);
+  //k := Voxel / MaxVoxelValue;
+
+  c := Trunc(255 * k + TRGBQuad(APixel).rgbRed * (1-k));
 
   TRGBQuad(APixel).rgbRed   := c;
   TRGBQuad(APixel).rgbGreen := c;
@@ -163,7 +188,7 @@ begin
   TRGBQuad(APixel).rgbReserved := 0;
 end;
 
-procedure TMainForm.DrawPalette;
+procedure TMainForm.UpdatePalette;
 type
   TLine = array [0..511] of TColor;
 var
@@ -171,15 +196,16 @@ var
   sc: ^TLine;
   RenderRect, ClipRect: TRect;
   i, j: Integer;
-  ColorCallback: TUpdatePixelColorCallback;
 
 begin
   Multiplier := edMultiplier.Value;
   ScreenBuffer := imgPalette.Picture.Bitmap;
-  if cbMany.Checked then
-    ColorCallback := UpdateMultiLayerColor
-  else
-    ColorCallback := UpdateSingleLayerColor;
+
+  case rgDrawingMode.ItemIndex of
+    0: ColorCallback := UpdateSingleLayerColor;
+    1: ColorCallback := UpdateMultiLayerSummColor;
+    2: ColorCallback := UpdateMultiLayerFadeColor;
+  end;
 
   ClipRect := ScreenBuffer.Canvas.ClipRect;
   Inc(ClipRect.Top);
@@ -208,50 +234,50 @@ end;
 
 procedure TMainForm.DrawImage;
 begin
-  edLayer.Value := tbLayer.Position;
-  if not cbMany.Checked then
-      begin
-        tbLayer.SelStart := tbLayer.Position;
-        tbLayer.SelEnd   := tbLayer.Position;
-      end
-    else
-      if cbUp.Checked then
+  TWaiting.Start;
+  try
+    edLayer.Value := tbLayer.Position;
+    if rgDrawingMode.ItemIndex = 0 then
         begin
           tbLayer.SelStart := tbLayer.Position;
-          tbLayer.SelEnd   := min(511, tbLayer.Position + edDeep.Value);
+          tbLayer.SelEnd   := tbLayer.Position;
         end
       else
-        begin
-          tbLayer.SelStart := max(0, tbLayer.Position - edDeep.Value);
-          tbLayer.SelEnd   := tbLayer.Position;
-        end;
+        if cbUp.Checked then
+          begin
+            tbLayer.SelStart := tbLayer.Position;
+            tbLayer.SelEnd   := min(511, tbLayer.Position + edDeep.Value);
+          end
+        else
+          begin
+            tbLayer.SelStart := max(0, tbLayer.Position - edDeep.Value);
+            tbLayer.SelEnd   := tbLayer.Position;
+          end;
 
-  if not Assigned(VoxelArray) then
-    Exit;
+    if not Assigned(VoxelArray) then
+      Exit;
 
-  img.Picture.Bitmap.Canvas.Brush.Color := clBlack;
-  img.Picture.Bitmap.Canvas.Brush.Style := bsSolid;
-  img.Picture.Bitmap.Canvas.FillRect(img.Picture.Bitmap.Canvas.ClipRect);
+    img.Picture.Bitmap.Canvas.Brush.Color := clBlack;
+    img.Picture.Bitmap.Canvas.Brush.Style := bsSolid;
+    img.Picture.Bitmap.Canvas.FillRect(img.Picture.Bitmap.Canvas.ClipRect);
 
-  case rgAxis.ItemIndex of
-    0: CoordCallback := XY;
-    1: CoordCallback := YZ;
-    2: CoordCallback := XZ;
+    case rgAxis.ItemIndex of
+      0: CoordCallback := XY;
+      1: CoordCallback := YZ;
+      2: CoordCallback := XZ;
+    end;
+
+    CubeRect := Rect(0, 0, 511, 511);
+    with CenterPoint(img.Picture.Bitmap.Canvas.ClipRect) do
+      OffsetRect(CubeRect, X-255, Y-255);
+
+    VoxelArray.Draw(tbLayer.SelStart, tbLayer.SelEnd, cbUp.Checked, CoordCallback, ColorCallback, CubeRect, img.Picture.Bitmap);
+    NeedDrawImage := False;
+    pnlImg.Invalidate;
+    Application.ProcessMessages;
+  finally
+    TWaiting.Finish;
   end;
-  Multiplier := edMultiplier.Value;
-  if cbMany.Checked then
-    ColorCallback := UpdateMultiLayerColor
-  else
-    ColorCallback := UpdateSingleLayerColor;
-
-  CubeRect := Rect(0, 0, 511, 511);
-  with CenterPoint(img.Picture.Bitmap.Canvas.ClipRect) do
-    OffsetRect(CubeRect, X-255, Y-255);
-
-  VoxelArray.Draw(tbLayer.SelStart, tbLayer.SelEnd, cbUp.Checked, CoordCallback, ColorCallback, CubeRect, img.Picture.Bitmap);
-  NeedDrawImage := False;
-  pnlImg.Invalidate;
-  Application.ProcessMessages;
 end;
 
 procedure TMainForm.imgMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
@@ -299,7 +325,7 @@ begin
   DrawImage;
   imgPalette.Picture.Bitmap.Width  := imgPalette.Width;
   imgPalette.Picture.Bitmap.Height := imgPalette.Height;
-  DrawPalette;
+  UpdatePalette;
   imgPaletteIndicator.Picture.Bitmap.Width  := imgPaletteIndicator.Width;
   imgPaletteIndicator.Picture.Bitmap.Height := imgPaletteIndicator.Height;
   DrawPaletteIndicator(False, 0);
@@ -309,7 +335,7 @@ procedure TMainForm.FormCreate(Sender: TObject);
 begin
   img.Picture.Bitmap.PixelFormat := pf32bit;
   imgPalette.Picture.Bitmap.PixelFormat := pf32bit;
-  DrawPalette;
+  UpdatePalette;
 end;
 
 procedure TMainForm.edLayerChange(Sender: TObject);
@@ -444,9 +470,36 @@ procedure TMainForm.ApplicationEventsIdle(Sender: TObject;
   var Done: Boolean);
 begin
   if NeedDrawPalette then
-    DrawPalette;
+    UpdatePalette;
   if NeedDrawImage then
     DrawImage;
+end;
+
+procedure TMainForm.btn1Click(Sender: TObject);
+begin
+  if cbUp.Checked then
+    tbLayer.Position := tbLayer.SelEnd
+  else
+    tbLayer.Position := tbLayer.SelStart;
+  cbUp.Checked := not cbUp.Checked;
+end;
+
+{ TWaiting }
+
+class procedure TWaiting.Finish;
+begin
+  Screen.Cursor := crDefault;
+end;
+
+class procedure TWaiting.Start;
+begin
+  Screen.Cursor := crHourGlass;
+end;
+
+procedure TMainForm.tbLayerChange(Sender: TObject);
+begin
+  if tbLayer.Position <> edLayer.Value then
+    DrawModeChanged(nil);
 end;
 
 end.
