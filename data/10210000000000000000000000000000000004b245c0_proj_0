@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PanoramaProperties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <HashCode>-1220119933</HashCode>
+  <InspectionR>-0.33516930581949111</InspectionR>
+  <InspectionQ>-2.5137697936460563</InspectionQ>
+  <InspectionP>38.413631568355335</InspectionP>
+  <PositionY>-2.5166101455688477</PositionY>
+  <PositionX>0.85826583840254433</PositionX>
+  <CurveType>0</CurveType>
+  <ThicknessScale>2.5</ThicknessScale>
+  <Angle>0</Angle>
+  <ProjSizeY>512</ProjSizeY>
+  <ProjSizeX>1735</ProjSizeX>
+  <VoxelSizeZ>0.29</VoxelSizeZ>
+  <VoxelSizeX>0.145</VoxelSizeX>
+  <SourceInfo>{1007DF09-F367-4004-AF5E-4BB5AF1006A8}</SourceInfo>
+  <ScanID>10210000000000000000000000000000000004b245c0</ScanID>
+  <TimeStamp>201108191114</TimeStamp>
+</PanoramaProperties>
