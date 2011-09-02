@@ -96,7 +96,7 @@ object MainForm: TMainForm
         'YZ'
         'XZ')
       TabOrder = 1
-      OnClick = DrawModeChanged
+      OnClick = rgAxisClick
     end
     object edDeep: TSpinEdit
       Left = 60
@@ -140,14 +140,14 @@ object MainForm: TMainForm
       Value = 10
       OnChange = PaletteModeChanged
     end
-    object btn1: TButton
+    object btnInverse: TButton
       Left = 56
       Top = 256
       Width = 101
       Height = 25
       Caption = 'C '#1076#1088#1091#1075#1086#1081' '#1089#1090#1086#1088#1086#1085#1099
       TabOrder = 6
-      OnClick = btn1Click
+      OnClick = btnInverseClick
     end
     object rgDrawingMode: TRadioGroup
       Left = 48
@@ -180,7 +180,6 @@ object MainForm: TMainForm
       Width = 754
       Height = 547
       Align = alClient
-      OnMouseMove = imgMouseMove
     end
     object imgPalette: TImage
       Left = 764
@@ -195,6 +194,15 @@ object MainForm: TMainForm
       Width = 10
       Height = 547
       Align = alRight
+    end
+    object pbOverlay: TPaintBox
+      Left = 47
+      Top = 40
+      Width = 742
+      Height = 459
+      OnMouseDown = pbOverlayMouseDown
+      OnMouseMove = pbOverlayMouseMove
+      OnPaint = pbOverlayPaint
     end
   end
   object ApplicationEvents: TApplicationEvents

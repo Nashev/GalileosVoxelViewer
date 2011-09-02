@@ -29,8 +29,26 @@ type
   TVoxelCoords = record
     X, Y, Z: TVoxelCoord;
   end;
+  function VoxelCoords(X, Y, Z: TVoxelCoord):TVoxelCoords;
+type
+  TCoordTransformer = class
+    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords; virtual; abstract;
+    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint; virtual; abstract;
+  end;
 
-  TVoxelToPixelPixelCoordTransformCallback = function (i, j, ALayer: Integer; ACubeRect: TRect): TVoxelCoords of object;
+  TCoordTransformerXY = class(TCoordTransformer)
+    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords; override;
+    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint; override;
+  end;
+  TCoordTransformerYZ = class(TCoordTransformer)
+    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords; override;
+    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint; override;
+  end;
+  TCoordTransformerXZ = class(TCoordTransformer)
+    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords; override;
+    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint; override;
+  end;
+
   TUpdatePixelColorCallback = procedure (var APixel: TColor; Voxel: TVoxelValue; n: Integer) of object;
 
   TVoxelArray = class
@@ -43,7 +61,7 @@ type
     constructor Create(AMask: string);
     destructor Destroy; override;
     property Slices[Index: Integer]: TVoxelSlice read GetSlices;
-    procedure Draw(MinLayer, MaxLayer: Integer; Backward: Boolean; CoordCallBack:TVoxelToPixelPixelCoordTransformCallback; ColorCallback: TUpdatePixelColorCallback; CubeRect: TRect; ScreenBuffer: TBitmap);
+    procedure Draw(CurrentPosition: TVoxelCoords; Deep: Integer; CoordTransformer: TCoordTransformer; ColorCallback: TUpdatePixelColorCallback; CubeRect: TRect; ScreenBuffer: TBitmap);
     property Voxel[Coords: TVoxelCoords]: TVoxelValue read GetVoxel;// write SetVoxel;
   end;
 
@@ -69,37 +87,42 @@ type
     imgPaletteIndicator: TImage;
     edMultiplier: TSpinEdit;
     ApplicationEvents: TApplicationEvents;
-    btn1: TButton;
+    btnInverse: TButton;
     lbl1: TLabel;
     rgDrawingMode: TRadioGroup;
-    procedure btnRClick(Sender: TObject);
+    pbOverlay: TPaintBox;
+    procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure btnRClick(Sender: TObject);
     procedure DrawModeChanged(Sender: TObject);
     procedure pnlImgResize(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure edLayerChange(Sender: TObject);
     procedure PaletteModeChanged(Sender: TObject);
-    procedure imgMouseMove(Sender: TObject; Shift: TShiftState; X,
-      Y: Integer);
     procedure ApplicationEventsIdle(Sender: TObject; var Done: Boolean);
-    procedure btn1Click(Sender: TObject);
+    procedure btnInverseClick(Sender: TObject);
     procedure tbLayerChange(Sender: TObject);
+    procedure pbOverlayPaint(Sender: TObject);
+    procedure pbOverlayMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure rgAxisClick(Sender: TObject);
+    procedure pbOverlayMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     VoxelArray: TVoxelArray;
-    CoordCallBack:TVoxelToPixelPixelCoordTransformCallback;
+    CoordTransformer: TCoordTransformer;
     ColorCallback: TUpdatePixelColorCallback;
     CubeRect: TRect;
     Multiplier: byte;
     NeedDrawPalette: Boolean;
     NeedDrawImage: Boolean;
+    CurrentPosition: TVoxelCoords;
+    XY: TCoordTransformerXY;
+    YZ: TCoordTransformerYZ;
+    XZ: TCoordTransformerXZ;
     procedure DrawImage;
     procedure UpdatePalette;
+    procedure CoordSystemChanged;
     procedure DrawPaletteIndicator(Visible: Boolean; Value: TVoxelValue);
   public
-    function XY(i, j, ALayer: Integer; ACubeRect: TRect): TVoxelCoords;
-    function YZ(i, j, ALayer: Integer; ACubeRect: TRect): TVoxelCoords;
-    function XZ(i, j, ALayer: Integer; ACubeRect: TRect): TVoxelCoords;
-
     procedure UpdateSingleLayerColor(var APixel: TColor; Voxel: TVoxelValue; n: Integer);
     procedure UpdateMultiLayerSummColor (var APixel: TColor; Voxel: TVoxelValue; n: Integer);
     procedure UpdateMultiLayerFadeColor (var APixel: TColor; Voxel: TVoxelValue; n: Integer);
@@ -124,26 +147,51 @@ begin
   FreeAndNil(VoxelArray);
 end;
 
-function TMainForm.XY(i, j, ALayer: Integer; ACubeRect: TRect): TVoxelCoords;
+///////////////////////////////////////////////////////////
+
+function TCoordTransformerXY.ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords;
 begin
   Result.X := max(0, min(511, i - ACubeRect.Left));
   Result.Y := max(0, min(511, 511 - (j - ACubeRect.Top)));
-  Result.Z := max(0, min(511, 511 - ALayer));
+  Result.Z := AViewPoint.Z + Deep;
 end;
 
-function TMainForm.YZ(i, j, ALayer: Integer; ACubeRect: TRect): TVoxelCoords;
+function TCoordTransformerYZ.ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords;
 begin
-  Result.X := max(0, min(511, 511 - ALayer));
+  Result.X := AViewPoint.X + Deep;
   Result.Y := max(0, min(511, i - ACubeRect.Left));
   Result.Z := max(0, min(511, 511 - (j - ACubeRect.Top)));
 end;
 
-function TMainForm.XZ(i, j, ALayer: Integer; ACubeRect: TRect): TVoxelCoords;
+function TCoordTransformerXZ.ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords;
 begin
   Result.X := max(0, min(511, i - ACubeRect.Left));
-  Result.Y := max(0, min(511, 511 - ALayer));
+  Result.Y := AViewPoint.Y + Deep;
   Result.Z := max(0, min(511, 511 - (j - ACubeRect.Top)));
 end;
+
+///////////////////////////////////////////////////////////
+
+function TCoordTransformerXY.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint;
+begin
+  Result.X := ACubeRect.Left + ACoords.X;        //  X = i - dx        =>    i = X + dx
+  Result.Y := ACubeRect.Top  + 511 - ACoords.Y;  //  Y = c - (j - dy)  =>    j = c - Y + dy
+end;
+
+function TCoordTransformerYZ.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint;
+begin
+  Result.X := ACubeRect.Left + ACoords.Y;
+  Result.Y := ACubeRect.Top  + 511 - ACoords.Z;
+end;
+
+function TCoordTransformerXZ.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint;
+begin
+  Result.X := ACubeRect.Left + ACoords.X;
+  Result.Y := ACubeRect.Top  + 511 - ACoords.Z;
+end;
+
+///////////////////////////////////////////////////////////
+
 
 procedure TMainForm.UpdateMultiLayerSummColor (var APixel: TColor; Voxel: TVoxelValue; n: Integer);
 var
@@ -233,7 +281,10 @@ begin
 end;
 
 procedure TMainForm.DrawImage;
+var
+  Deep: Integer;
 begin
+  NeedDrawImage := False;
   TWaiting.Start;
   try
     edLayer.Value := tbLayer.Position;
@@ -241,49 +292,39 @@ begin
         begin
           tbLayer.SelStart := tbLayer.Position;
           tbLayer.SelEnd   := tbLayer.Position;
+          Deep := 0;
         end
       else
         if cbUp.Checked then
           begin
             tbLayer.SelStart := tbLayer.Position;
             tbLayer.SelEnd   := min(511, tbLayer.Position + edDeep.Value);
+            Deep := tbLayer.SelStart - tbLayer.SelEnd;
           end
         else
           begin
             tbLayer.SelStart := max(0, tbLayer.Position - edDeep.Value);
             tbLayer.SelEnd   := tbLayer.Position;
+            Deep := tbLayer.SelEnd - tbLayer.SelStart;
           end;
-
-    if not Assigned(VoxelArray) then
-      Exit;
 
     img.Picture.Bitmap.Canvas.Brush.Color := clBlack;
     img.Picture.Bitmap.Canvas.Brush.Style := bsSolid;
     img.Picture.Bitmap.Canvas.FillRect(img.Picture.Bitmap.Canvas.ClipRect);
 
-    case rgAxis.ItemIndex of
-      0: CoordCallback := XY;
-      1: CoordCallback := YZ;
-      2: CoordCallback := XZ;
-    end;
+    if not Assigned(VoxelArray) then
+      Exit;
 
     CubeRect := Rect(0, 0, 511, 511);
     with CenterPoint(img.Picture.Bitmap.Canvas.ClipRect) do
       OffsetRect(CubeRect, X-255, Y-255);
 
-    VoxelArray.Draw(tbLayer.SelStart, tbLayer.SelEnd, cbUp.Checked, CoordCallback, ColorCallback, CubeRect, img.Picture.Bitmap);
-    NeedDrawImage := False;
+    VoxelArray.Draw(CurrentPosition, Deep, CoordTransformer, ColorCallback, CubeRect, img.Picture.Bitmap);
     pnlImg.Invalidate;
     Application.ProcessMessages;
   finally
     TWaiting.Finish;
   end;
-end;
-
-procedure TMainForm.imgMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
-begin
-  if Assigned(VoxelArray) then
-    DrawPaletteIndicator(True, VoxelArray.Voxel[CoordCallBack(X, Y, tbLayer.Position, CubeRect)])
 end;
 
 procedure TMainForm.DrawModeChanged(Sender: TObject);
@@ -329,6 +370,7 @@ begin
   imgPaletteIndicator.Picture.Bitmap.Width  := imgPaletteIndicator.Width;
   imgPaletteIndicator.Picture.Bitmap.Height := imgPaletteIndicator.Height;
   DrawPaletteIndicator(False, 0);
+  pbOverlay.BoundsRect := pnlImg.ClientRect;
 end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
@@ -336,6 +378,13 @@ begin
   img.Picture.Bitmap.PixelFormat := pf32bit;
   imgPalette.Picture.Bitmap.PixelFormat := pf32bit;
   UpdatePalette;
+
+  XY := TCoordTransformerXY.Create;
+  YZ := TCoordTransformerYZ.Create;
+  XZ := TCoordTransformerXZ.Create;
+
+  CurrentPosition := VoxelCoords(255, 255, 255);
+  CoordSystemChanged;
 end;
 
 procedure TMainForm.edLayerChange(Sender: TObject);
@@ -408,14 +457,13 @@ begin
     end;
 end;
 
-procedure TVoxelArray.Draw(MinLayer, MaxLayer: Integer; Backward: Boolean; CoordCallBack:TVoxelToPixelPixelCoordTransformCallback; ColorCallback: TUpdatePixelColorCallback; CubeRect: TRect; ScreenBuffer: TBitmap);
+procedure TVoxelArray.Draw(CurrentPosition: TVoxelCoords; Deep: Integer; CoordTransformer: TCoordTransformer; ColorCallback: TUpdatePixelColorCallback; CubeRect: TRect; ScreenBuffer: TBitmap);
 type
   TLine = array [0..511] of TColor;
 var
   sc: ^TLine;
   RenderRect, ClipRect: TRect;
-  n: Integer;
-  Layer: Integer;
+  LayerOffset: Integer;
 
   procedure Loops(Layer: Integer);
   var
@@ -426,7 +474,7 @@ var
         sc := ScreenBuffer.ScanLine[j];
         for i := RenderRect.Left to RenderRect.Right do
           begin
-            ColorCallback(sc[i], Voxel[CoordCallback(i, j, Layer, CubeRect)], n);
+            ColorCallback(sc[i], Voxel[CoordTransformer.ScreenToVoxel(i, j, CurrentPosition, Layer, CubeRect)], Abs(Deep));
           end;
       end;
   end;
@@ -437,17 +485,16 @@ begin
   Inc(ClipRect.Left);
   Dec(ClipRect.Bottom);
   Dec(ClipRect.Right);
-  n := MaxLayer - MinLayer + 1;
 
   if not IntersectRect(RenderRect, CubeRect, ClipRect) then
     Exit;
 
-  if not Backward then
-    for Layer := MinLayer to MaxLayer do
-      Loops(Layer)
+  if Deep > 0 then
+    for LayerOffset := 0 to Deep do
+      Loops(LayerOffset)
   else
-    for Layer := MaxLayer downto MinLayer do
-      Loops(Layer);
+    for LayerOffset := Deep to 0 do
+      Loops(LayerOffset);
 end;
 
 function TVoxelArray.GetVoxel(Coords: TVoxelCoords): TVoxelValue;
@@ -475,7 +522,7 @@ begin
     DrawImage;
 end;
 
-procedure TMainForm.btn1Click(Sender: TObject);
+procedure TMainForm.btnInverseClick(Sender: TObject);
 begin
   if cbUp.Checked then
     tbLayer.Position := tbLayer.SelEnd
@@ -496,10 +543,85 @@ begin
   Screen.Cursor := crHourGlass;
 end;
 
-procedure TMainForm.tbLayerChange(Sender: TObject);
+procedure TMainForm.pbOverlayPaint(Sender: TObject);
+
+  procedure Line(X1, Y1, X2, Y2: Integer);
+  begin
+    pbOverlay.Canvas.MoveTo(X1, Y1);
+    pbOverlay.Canvas.LineTo(X2, Y2);
+  end;
+
 begin
-  if tbLayer.Position <> edLayer.Value then
-    DrawModeChanged(nil);
+  pbOverlay.Canvas.Pen.Style := psSolid;
+  pbOverlay.Canvas.Pen.Color := clYellow;
+  with CoordTransformer.VoxelToScreen(CurrentPosition, CurrentPosition, CubeRect) do
+    begin
+      Line(X,    Y-10, X,    Y+10);
+      Line(X-10, Y,    X+10, Y   );
+    end;
+end;
+
+procedure TMainForm.pbOverlayMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+begin
+  if Assigned(VoxelArray) then
+    DrawPaletteIndicator(True, VoxelArray.Voxel[CoordTransformer.ScreenToVoxel(X, Y, CurrentPosition, 0, CubeRect)]);
+  pbOverlay.Invalidate;
+end;
+
+{ TVoxelCoords }
+
+function VoxelCoords(X, Y, Z: TVoxelCoord): TVoxelCoords;
+begin
+  Result.X := X;
+  Result.Y := Y;
+  Result.Z := Z;
+end;
+
+procedure TMainForm.rgAxisClick(Sender: TObject);
+begin
+  CoordSystemChanged;
+end;
+
+procedure TMainForm.tbLayerChange(Sender: TObject); // вызывается и из edLayerChange, и из btnInverseClick
+begin
+  case rgAxis.ItemIndex of
+    0: CurrentPosition.Z := 511 - tbLayer.Position;
+    1: CurrentPosition.X := tbLayer.Position;
+    2: CurrentPosition.Y := 511 - tbLayer.Position;
+  end;
+
+  if tbLayer.Position = edLayer.Value then
+    Exit;
+
+  DrawModeChanged(nil);
+end;
+
+procedure TMainForm.CoordSystemChanged;
+begin
+  case rgAxis.ItemIndex of
+    0:
+      begin
+        CoordTransformer := XY;
+        tbLayer.Position := 511 - CurrentPosition.Z;
+      end;
+    1:
+      begin
+        CoordTransformer := YZ;
+        tbLayer.Position := CurrentPosition.X;
+      end;
+    2:
+      begin
+        CoordTransformer := XZ;
+        tbLayer.Position := 511 - CurrentPosition.Y;
+      end;
+  end;
+  DrawModeChanged(nil);
+end;
+
+procedure TMainForm.pbOverlayMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  CurrentPosition := CoordTransformer.ScreenToVoxel(X, Y, CurrentPosition, 0, CubeRect);
 end;
 
 end.
