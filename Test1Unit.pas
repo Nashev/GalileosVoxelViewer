@@ -16,35 +16,85 @@ type
   TVoxelSlice = class
   private
     FMemoryStream: TMemoryStream;
+    FSize: Integer;
   public
     property MemoryStream: TMemoryStream read FMemoryStream;
+    property Size: Integer read FSize;
     constructor Create(AFileName: string);
     destructor Destroy; override;
   end;
-  TVoxelValue = Word;
+
+  TVoxelValue = type Word;
+  TVoxelValues = array of TVoxelValue;
+
 const
   MaxVoxelValue = $FFF;
+
 type
-  TVoxelCoord = 0..511;
+  TVoxelCoord = Integer;
   TVoxelCoords = record
     X, Y, Z: TVoxelCoord;
   end;
-  function VoxelCoords(X, Y, Z: TVoxelCoord):TVoxelCoords;
+
+  function VoxelCoords(X, Y, Z: TVoxelCoord): TVoxelCoords;
+
 type
+  TVoxelArray = class;
+
   TCoordTransformer = class
+  private
+    FVoxelArray: TVoxelArray;
+  public
+    function ScreenWidth: Integer; virtual; abstract;
+    function ScreenHeight: Integer; virtual; abstract;
+    function ScreenDeep: Integer; virtual; abstract;
+    function GetDeep(AViewPoint: TVoxelCoords): Integer; virtual; abstract;
+    procedure SetDeep(var AViewPoint: TVoxelCoords; ADeep: Integer); virtual; abstract;
     function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords; virtual; abstract;
     function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint; virtual; abstract;
+    property VoxelArray: TVoxelArray read FVoxelArray write FVoxelArray;
   end;
 
   TCoordTransformerXY = class(TCoordTransformer)
+  public
+    function ScreenWidth: Integer; override;
+    function ScreenHeight: Integer; override;
+    function ScreenDeep: Integer; override;
+    function GetDeep(AViewPoint: TVoxelCoords): Integer; override;
+    procedure SetDeep(var AViewPoint: TVoxelCoords; ADeep: Integer); override;
     function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords; override;
     function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint; override;
   end;
+
   TCoordTransformerYZ = class(TCoordTransformer)
+  public
+    function ScreenWidth: Integer; override;
+    function ScreenHeight: Integer; override;
+    function ScreenDeep: Integer; override;
+    function GetDeep(AViewPoint: TVoxelCoords): Integer; override;
+    procedure SetDeep(var AViewPoint: TVoxelCoords; ADeep: Integer); override;
     function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords; override;
     function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint; override;
   end;
+
   TCoordTransformerXZ = class(TCoordTransformer)
+  public
+    function ScreenWidth: Integer; override;
+    function ScreenHeight: Integer; override;
+    function ScreenDeep: Integer; override;
+    function GetDeep(AViewPoint: TVoxelCoords): Integer; override;
+    procedure SetDeep(var AViewPoint: TVoxelCoords; ADeep: Integer); override;
+    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords; override;
+    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint; override;
+  end;
+
+  TCoordTransformerFree = class(TCoordTransformer)
+  public
+    function ScreenWidth: Integer; override;
+    function ScreenHeight: Integer; override;
+    function ScreenDeep: Integer; override;
+    function GetDeep(AViewPoint: TVoxelCoords): Integer; override;
+    procedure SetDeep(var AViewPoint: TVoxelCoords; ADeep: Integer); override;
     function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords; override;
     function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint; override;
   end;
@@ -54,15 +104,19 @@ type
   TVoxelArray = class
   private
     FList: TObjectList;
-    FMask: string;
-    function GetSlices(Index: Integer): TVoxelSlice;
+    FFileNameMask: string;
+    FSize: TVoxelCoords;
+    function GetSlice(Index: Integer): TVoxelSlice;
     function GetVoxel(Coords: TVoxelCoords): TVoxelValue;
+    function GetFileName(Index: Integer): string;
   public
-    constructor Create(AMask: string);
+    constructor Create(AGWGFileName: string);
     destructor Destroy; override;
-    property Slices[Index: Integer]: TVoxelSlice read GetSlices;
-    procedure Draw(CurrentPosition: TVoxelCoords; Deep: Integer; CoordTransformer: TCoordTransformer; ColorCallback: TUpdatePixelColorCallback; CubeRect: TRect; ScreenBuffer: TBitmap);
+    property Slices[Index: Integer]: TVoxelSlice read GetSlice;
+    procedure Draw(ACurrentPosition: TVoxelCoords; ADeep: Integer; ACoordTransformer: TCoordTransformer; AColorCallback: TUpdatePixelColorCallback; ACubeRect: TRect; AScreenBuffer: TBitmap);
     property Voxel[Coords: TVoxelCoords]: TVoxelValue read GetVoxel;// write SetVoxel;
+    property FileNames[Index: Integer]: string read GetFileName;
+    property Size: TVoxelCoords read FSize;
   end;
 
   TPanel = class(ExtCtrls.TPanel)
@@ -74,7 +128,7 @@ type
     pnl1: TPanel;
     pnl2: TPanel;
     spl1: TSplitter;
-    edFileName: TEdit;
+    edFileName: TComboBox;
     btnR: TButton;
     img: TImage;
     pnlImg: TPanel;
@@ -139,6 +193,7 @@ procedure TMainForm.btnRClick(Sender: TObject);
 begin
   FreeAndNil(VoxelArray);
   VoxelArray := TVoxelArray.Create(edFileName.Text);
+  CoordTransformer.VoxelArray := VoxelArray;
   DrawImage;
 end;
 
@@ -151,47 +206,125 @@ end;
 
 function TCoordTransformerXY.ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords;
 begin
-  Result.X := max(0, min(511, i - ACubeRect.Left));
-  Result.Y := max(0, min(511, 511 - (j - ACubeRect.Top)));
+  Result.X := max(0, min(VoxelArray.Size.X - 1, i - ACubeRect.Left));
+  Result.Y := max(0, min(VoxelArray.Size.Y - 1, VoxelArray.Size.Y - 1 - (j - ACubeRect.Top)));
   Result.Z := AViewPoint.Z + Deep;
 end;
 
 function TCoordTransformerYZ.ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords;
 begin
   Result.X := AViewPoint.X + Deep;
-  Result.Y := max(0, min(511, i - ACubeRect.Left));
-  Result.Z := max(0, min(511, 511 - (j - ACubeRect.Top)));
+  Result.Y := max(0, min(VoxelArray.Size.Y - 1, i - ACubeRect.Left));
+  Result.Z := max(0, min(VoxelArray.Size.Z - 1, VoxelArray.Size.Z - 1 - (j - ACubeRect.Top)));
 end;
 
 function TCoordTransformerXZ.ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords;
 begin
-  Result.X := max(0, min(511, i - ACubeRect.Left));
+  Result.X := max(0, min(VoxelArray.Size.X - 1, i - ACubeRect.Left));
   Result.Y := AViewPoint.Y + Deep;
-  Result.Z := max(0, min(511, 511 - (j - ACubeRect.Top)));
+  Result.Z := max(0, min(VoxelArray.Size.Z - 1, VoxelArray.Size.Z - 1 - (j - ACubeRect.Top)));
 end;
 
 ///////////////////////////////////////////////////////////
 
 function TCoordTransformerXY.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint;
 begin
-  Result.X := ACubeRect.Left + ACoords.X;        //  X = i - dx        =>    i = X + dx
-  Result.Y := ACubeRect.Top  + 511 - ACoords.Y;  //  Y = c - (j - dy)  =>    j = c - Y + dy
+  Result.X := ACubeRect.Left + ACoords.X;                 //  X = i - dx        =>    i = X + dx
+  Result.Y := ACubeRect.Top  + ScreenHeight - ACoords.Y;  //  Y = c - (j - dy)  =>    j = c - Y + dy
 end;
 
 function TCoordTransformerYZ.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint;
 begin
   Result.X := ACubeRect.Left + ACoords.Y;
-  Result.Y := ACubeRect.Top  + 511 - ACoords.Z;
+  Result.Y := ACubeRect.Top  + ScreenHeight - ACoords.Z;
 end;
 
 function TCoordTransformerXZ.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint;
 begin
   Result.X := ACubeRect.Left + ACoords.X;
-  Result.Y := ACubeRect.Top  + 511 - ACoords.Z;
+  Result.Y := ACubeRect.Top  + ScreenHeight - ACoords.Z;
 end;
 
 ///////////////////////////////////////////////////////////
 
+function TCoordTransformerXY.GetDeep(AViewPoint: TVoxelCoords): Integer;
+begin
+  Result := ScreenDeep - 1 - AViewPoint.Z;
+end;
+
+function TCoordTransformerYZ.GetDeep(AViewPoint: TVoxelCoords): Integer;
+begin
+  Result := AViewPoint.X;
+end;
+
+function TCoordTransformerXZ.GetDeep(AViewPoint: TVoxelCoords): Integer;
+begin
+  Result := ScreenDeep - 1 - AViewPoint.Y;
+end;
+
+procedure TCoordTransformerXY.SetDeep(var AViewPoint: TVoxelCoords; ADeep: Integer);
+begin
+  AViewPoint.Z := ScreenDeep - 1 - ADeep;
+end;
+
+procedure TCoordTransformerYZ.SetDeep(var AViewPoint: TVoxelCoords; ADeep: Integer);
+begin
+  AViewPoint.X := ADeep;
+end;
+
+procedure TCoordTransformerXZ.SetDeep(var AViewPoint: TVoxelCoords; ADeep: Integer);
+begin
+  AViewPoint.Y := ScreenDeep - 1 - ADeep;
+end;
+
+///////////////////////////////////////////////////////////
+
+function TCoordTransformerXY.ScreenWidth: Integer;
+begin
+  Result := VoxelArray.Size.X;
+end;
+
+function TCoordTransformerXY.ScreenHeight: Integer;
+begin
+  Result := VoxelArray.Size.Y;
+end;
+
+function TCoordTransformerXY.ScreenDeep: Integer;
+begin
+  Result := VoxelArray.Size.Z;
+end;
+
+function TCoordTransformerYZ.ScreenWidth: Integer;
+begin
+  Result := VoxelArray.Size.Y;
+end;
+
+function TCoordTransformerYZ.ScreenHeight: Integer;
+begin
+  Result := VoxelArray.Size.Z;
+end;
+
+function TCoordTransformerYZ.ScreenDeep: Integer;
+begin
+  Result := VoxelArray.Size.X;
+end;
+
+function TCoordTransformerXZ.ScreenWidth: Integer;
+begin
+  Result := VoxelArray.Size.X;
+end;
+
+function TCoordTransformerXZ.ScreenHeight: Integer;
+begin
+  Result := VoxelArray.Size.Z;
+end;
+
+function TCoordTransformerXZ.ScreenDeep: Integer;
+begin
+  Result := VoxelArray.Size.Y;
+end;
+
+///////////////////////////////////////////////////////////
 
 procedure TMainForm.UpdateMultiLayerSummColor (var APixel: TColor; Voxel: TVoxelValue; n: Integer);
 var
@@ -298,12 +431,12 @@ begin
         if cbUp.Checked then
           begin
             tbLayer.SelStart := tbLayer.Position;
-            tbLayer.SelEnd   := min(511, tbLayer.Position + edDeep.Value);
+            tbLayer.SelEnd   := min(tbLayer.Max, tbLayer.Position + edDeep.Value);
             Deep := tbLayer.SelStart - tbLayer.SelEnd;
           end
         else
           begin
-            tbLayer.SelStart := max(0, tbLayer.Position - edDeep.Value);
+            tbLayer.SelStart := max(tbLayer.Min, tbLayer.Position - edDeep.Value);
             tbLayer.SelEnd   := tbLayer.Position;
             Deep := tbLayer.SelEnd - tbLayer.SelStart;
           end;
@@ -315,9 +448,9 @@ begin
     if not Assigned(VoxelArray) then
       Exit;
 
-    CubeRect := Rect(0, 0, 511, 511);
+    CubeRect := Rect(0, 0, CoordTransformer.ScreenWidth - 1, CoordTransformer.ScreenHeight - 1);
     with CenterPoint(img.Picture.Bitmap.Canvas.ClipRect) do
-      OffsetRect(CubeRect, X-255, Y-255);
+      OffsetRect(CubeRect, X-CoordTransformer.ScreenWidth div 2, Y-CoordTransformer.ScreenHeight div 2);
 
     VoxelArray.Draw(CurrentPosition, Deep, CoordTransformer, ColorCallback, CubeRect, img.Picture.Bitmap);
     pnlImg.Invalidate;
@@ -420,6 +553,7 @@ begin
   finally
     Stream.Free;
   end;
+  FSize := Round(sqrt(MemoryStream.Size div 2));
 end;
 
 destructor TVoxelSlice.Destroy;
@@ -430,15 +564,22 @@ end;
 
 { TVoxelArray }
 
-constructor TVoxelArray.Create(AMask: string);
-var
-  z: Integer;
+constructor TVoxelArray.Create(AGWGFileName: string);
 begin
-  FMask := AMask;
+  AGWGFileName := ChangeFileExt(AGWGFileName, '');
+  FFileNameMask := ExtractFileDir(AGWGFileName) + '\' + ExtractFileName(AGWGFileName) + '\' + ExtractFileName(AGWGFileName);
   FList := TObjectList.Create(True);
-  FList.Capacity := 512;
-  for z := 0 to 511 do
-    FList.Add(nil);
+  FSize.Z := 0;
+  while FileExists(FileNames[FSize.Z]) do
+    Inc(FSize.Z);
+  FList.Capacity := FSize.Z;
+  FList.Count := FSize.Z;
+  // в остальных двух размерах сориентируемся по первому слою:
+  if FSize.Z > 0 then
+    FSize.X := Slices[0].Size
+  else
+    FSize.X := 0;
+  FSize.Y := FSize.X;
 end;
 
 destructor TVoxelArray.Destroy;
@@ -447,17 +588,22 @@ begin
   inherited;
 end;
 
-function TVoxelArray.GetSlices(Index: Integer): TVoxelSlice;
+function TVoxelArray.GetFileName(Index: Integer): string;
+begin
+  Result := FFileNameMask + Format('_%.3d', [Index]);
+end;
+
+function TVoxelArray.GetSlice(Index: Integer): TVoxelSlice;
 begin
   Result := FList[Index] as TVoxelSlice;
   if not Assigned(Result) then
     begin
-      Result := TVoxelSlice.Create(StringReplace(FMask, '#Z', Format('%.3d', [Index]), []));
+      Result := TVoxelSlice.Create(FileNames[Index]);
       FList[Index] := Result;
     end;
 end;
 
-procedure TVoxelArray.Draw(CurrentPosition: TVoxelCoords; Deep: Integer; CoordTransformer: TCoordTransformer; ColorCallback: TUpdatePixelColorCallback; CubeRect: TRect; ScreenBuffer: TBitmap);
+procedure TVoxelArray.Draw(ACurrentPosition: TVoxelCoords; ADeep: Integer; ACoordTransformer: TCoordTransformer; AColorCallback: TUpdatePixelColorCallback; ACubeRect: TRect; AScreenBuffer: TBitmap);
 type
   TLine = array [0..511] of TColor;
 var
@@ -471,38 +617,38 @@ var
   begin
     for j := RenderRect.Top to RenderRect.Bottom do
       begin
-        sc := ScreenBuffer.ScanLine[j];
+        sc := AScreenBuffer.ScanLine[j];
         for i := RenderRect.Left to RenderRect.Right do
           begin
-            ColorCallback(sc[i], Voxel[CoordTransformer.ScreenToVoxel(i, j, CurrentPosition, Layer, CubeRect)], Abs(Deep));
+            AColorCallback(sc[i], Voxel[ACoordTransformer.ScreenToVoxel(i, j, ACurrentPosition, Layer, ACubeRect)], Abs(ADeep));
           end;
       end;
   end;
 
 begin
-  ClipRect := ScreenBuffer.Canvas.ClipRect;
+  ClipRect := AScreenBuffer.Canvas.ClipRect;
   Inc(ClipRect.Top);
   Inc(ClipRect.Left);
   Dec(ClipRect.Bottom);
   Dec(ClipRect.Right);
 
-  if not IntersectRect(RenderRect, CubeRect, ClipRect) then
+  if not IntersectRect(RenderRect, ACubeRect, ClipRect) then
     Exit;
 
-  if Deep > 0 then
-    for LayerOffset := 0 to Deep do
+  if ADeep > 0 then
+    for LayerOffset := 0 to ADeep do
       Loops(LayerOffset)
   else
-    for LayerOffset := Deep to 0 do
+    for LayerOffset := ADeep to 0 do
       Loops(LayerOffset);
 end;
 
 function TVoxelArray.GetVoxel(Coords: TVoxelCoords): TVoxelValue;
-type
-  TSliceData = array [0..511, 0..511] of TVoxelValue;
-  PSliceData = ^TSliceData;
+var
+  Slice: TVoxelSlice;
 begin
-  Result := PSliceData(Slices[Coords.Z].MemoryStream.Memory)[Coords.Y, Coords.X];
+  Slice := Slices[Coords.Z];
+  Result := TVoxelValues(Slice.MemoryStream.Memory)[Coords.Y * Slice.Size + Coords.X];
 end;
 
 { TPanel }
@@ -552,6 +698,9 @@ procedure TMainForm.pbOverlayPaint(Sender: TObject);
   end;
 
 begin
+  if not Assigned(VoxelArray) then
+    Exit;
+
   pbOverlay.Canvas.Pen.Style := psSolid;
   pbOverlay.Canvas.Pen.Color := clYellow;
   with CoordTransformer.VoxelToScreen(CurrentPosition, CurrentPosition, CubeRect) do
@@ -584,12 +733,7 @@ end;
 
 procedure TMainForm.tbLayerChange(Sender: TObject); // вызывается и из edLayerChange, и из btnInverseClick
 begin
-  case rgAxis.ItemIndex of
-    0: CurrentPosition.Z := 511 - tbLayer.Position;
-    1: CurrentPosition.X := tbLayer.Position;
-    2: CurrentPosition.Y := 511 - tbLayer.Position;
-  end;
-
+  CoordTransformer.SetDeep(CurrentPosition, tbLayer.Position);
   if tbLayer.Position = edLayer.Value then
     Exit;
 
@@ -599,29 +743,62 @@ end;
 procedure TMainForm.CoordSystemChanged;
 begin
   case rgAxis.ItemIndex of
-    0:
-      begin
-        CoordTransformer := XY;
-        tbLayer.Position := 511 - CurrentPosition.Z;
-      end;
-    1:
-      begin
-        CoordTransformer := YZ;
-        tbLayer.Position := CurrentPosition.X;
-      end;
-    2:
-      begin
-        CoordTransformer := XZ;
-        tbLayer.Position := 511 - CurrentPosition.Y;
-      end;
+    0: CoordTransformer := XY;
+    1: CoordTransformer := YZ;
+    2: CoordTransformer := XZ;
   end;
-  DrawModeChanged(nil);
+  CoordTransformer.VoxelArray := VoxelArray;
+  if Assigned(VoxelArray) then begin
+    tbLayer.Max := CoordTransformer.ScreenDeep - 1;
+    tbLayer.Position := CoordTransformer.GetDeep(CurrentPosition);
+    DrawModeChanged(nil);
+  end;
 end;
 
 procedure TMainForm.pbOverlayMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   CurrentPosition := CoordTransformer.ScreenToVoxel(X, Y, CurrentPosition, 0, CubeRect);
+end;
+
+{ TCoordTransformerFree }
+
+function TCoordTransformerFree.GetDeep(AViewPoint: TVoxelCoords): Integer;
+begin
+
+end;
+
+function TCoordTransformerFree.ScreenDeep: Integer;
+begin
+
+end;
+
+function TCoordTransformerFree.ScreenHeight: Integer;
+begin
+
+end;
+
+function TCoordTransformerFree.ScreenToVoxel(i, j: Integer;
+  AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords;
+begin
+
+end;
+
+function TCoordTransformerFree.ScreenWidth: Integer;
+begin
+
+end;
+
+procedure TCoordTransformerFree.SetDeep(var AViewPoint: TVoxelCoords;
+  ADeep: Integer);
+begin
+
+end;
+
+function TCoordTransformerFree.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords;
+  ACubeRect: TRect): TPoint;
+begin
+
 end;
 
 end.

@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{9698C5F8-E518-4327-A32C-3E48A0BB5D3C}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="TestProject1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Abbrevia 4.0\packages\Delphi 6\Abbrevia.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="TestProject1">
+        <MSBuild Projects="TestProject1.dproj"/>
+    </Target>
+    <Target Name="TestProject1:Clean">
+        <MSBuild Projects="TestProject1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestProject1:Make">
+        <MSBuild Projects="TestProject1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Abbrevia">
+        <MSBuild Projects="Abbrevia 4.0\packages\Delphi 6\Abbrevia.dproj"/>
+    </Target>
+    <Target Name="Abbrevia:Clean">
+        <MSBuild Projects="Abbrevia 4.0\packages\Delphi 6\Abbrevia.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Abbrevia:Make">
+        <MSBuild Projects="Abbrevia 4.0\packages\Delphi 6\Abbrevia.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="TestProject1;Abbrevia"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="TestProject1:Clean;Abbrevia:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="TestProject1:Make;Abbrevia:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -1,9 +1,9 @@
 object MainForm: TMainForm
   Left = 427
   Top = 236
-  Width = 1022
-  Height = 618
   Caption = 'GalileosVoxelViewer'
+  ClientHeight = 579
+  ClientWidth = 1006
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,30 +19,38 @@ object MainForm: TMainForm
     Left = 165
     Top = 37
     Width = 4
-    Height = 547
-    Cursor = crHSplit
+    Height = 542
   end
   object pnl1: TPanel
     Left = 0
     Top = 0
-    Width = 1014
+    Width = 1006
     Height = 37
     Align = alTop
     TabOrder = 0
     DesignSize = (
-      1014
+      1006
       37)
-    object edFileName: TEdit
+    object edFileName: TComboBox
       Left = 4
       Top = 8
       Width = 981
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
-      Text = '..\data\10210000000000000000000000000000000004b245c0_vol_0_#Z'
+      Text = 
+        '..\data\2011.08.09\10210000000000000000000000000000000004b245c0_' +
+        'vol_0.gwg'
+      Items.Strings = (
+        
+          '..\data\2011.08.09\10210000000000000000000000000000000004b245c0_' +
+          'vol_0.gwg'
+        
+          '..\data\2018.08.28\c378a0e168b148b881fdb05856d3e90fc378a0e168b1_' +
+          'vol_0.gwg')
     end
     object btnR: TButton
-      Left = 989
+      Left = 985
       Top = 8
       Width = 21
       Height = 21
@@ -57,7 +65,7 @@ object MainForm: TMainForm
     Left = 0
     Top = 37
     Width = 165
-    Height = 547
+    Height = 542
     Align = alLeft
     TabOrder = 1
     object lbl1: TLabel
@@ -77,11 +85,8 @@ object MainForm: TMainForm
       PageSize = 16
       Frequency = 16
       Position = 255
-      SelEnd = 0
-      SelStart = 0
       TabOrder = 0
       TickMarks = tmTopLeft
-      TickStyle = tsAuto
       OnChange = tbLayerChange
     end
     object rgAxis: TRadioGroup
@@ -167,8 +172,8 @@ object MainForm: TMainForm
   object pnlImg: TPanel
     Left = 169
     Top = 37
-    Width = 845
-    Height = 547
+    Width = 837
+    Height = 542
     Align = alClient
     BevelOuter = bvNone
     FullRepaint = False
@@ -177,22 +182,22 @@ object MainForm: TMainForm
     object img: TImage
       Left = 0
       Top = 0
-      Width = 754
-      Height = 547
+      Width = 746
+      Height = 542
       Align = alClient
     end
     object imgPalette: TImage
-      Left = 764
+      Left = 756
       Top = 0
       Width = 81
-      Height = 547
+      Height = 542
       Align = alRight
     end
     object imgPaletteIndicator: TImage
-      Left = 754
+      Left = 746
       Top = 0
       Width = 10
-      Height = 547
+      Height = 542
       Align = alRight
     end
     object pbOverlay: TPaintBox
