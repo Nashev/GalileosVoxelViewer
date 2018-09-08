@@ -1,0 +1,80 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  Caption = 'BlankForm'
+  ClientHeight = 595
+  ClientWidth = 686
+  FormFactor.Width = 1280
+  FormFactor.Height = 1024
+  FormFactor.Devices = [Desktop]
+  ShowFullScreenIcon = True
+  OnKeyDown = FormKeyDown
+  DesignerMasterStyle = 0
+  object Grid3D1: TGrid3D
+    Marks = 5.000000000000000000
+    Frequency = 1.000000000000000000
+    LineColor = x50505050
+    RotationAngle.X = 270.000000000000000000
+    Locked = True
+    Width = 50.000000000000000000
+    Height = 50.000000000000000000
+    Depth = 0.001000000047497451
+    HitTest = False
+    TwoSide = True
+    Quanternion = '(0.70710676908493,0,0,-0.70710676908493)'
+  end
+  object dmy1: TDummy
+    Width = 1.000000000000000000
+    Height = 1.000000000000000000
+    Depth = 1.000000000000000000
+    object dmy2: TDummy
+      Width = 1.000000000000000000
+      Height = 1.000000000000000000
+      Depth = 1.000000000000000000
+      object dmy3: TDummy
+        Width = 1.000000000000000000
+        Height = 1.000000000000000000
+        Depth = 1.000000000000000000
+        object c1: TCamera
+          AngleOfView = 45.000000000000000000
+          Position.Z = -5.000000000000000000
+          Width = 1.000000000000000000
+          Height = 1.000000000000000000
+          Depth = 1.000000000000000000
+        end
+        object l1: TLight
+          StyleName = 'qqq'
+          Color = claWhite
+          LightType = Directional
+          SpotCutOff = 60.000000000000000000
+          SpotExponent = 4.000000000000000000
+          Position.X = 352.000000000000000000
+          Position.Y = 374.000000000000000000
+          RotationAngle.X = 311.936218261718800000
+          RotationAngle.Y = 40.769176483154300000
+          RotationAngle.Z = 17.283523559570310000
+          Width = 1.000000000000000000
+          Height = 1.000000000000000000
+          Depth = 1.000000000000000000
+          Projection = Screen
+          Quanternion = 
+            '(-0.347306370735168,0.0366485305130482,0.25517064332962,0.901622' +
+            '712612152)'
+        end
+      end
+    end
+  end
+  object StrokeCube1: TStrokeCube
+    Color = claPowderblue
+    Width = 10.000000000000000000
+    Height = 10.000000000000000000
+    Depth = 10.000000000000000000
+    object RoundCube1: TRoundCube
+      RotationAngle.Z = 353.106689453125000000
+      Width = 6.640322208404541000
+      Height = 2.428853034973145000
+      Depth = 1.000000000000000000
+      Quanternion = '(0,0,-0.0601197108626366,0.998191118240356)'
+    end
+  end
+end

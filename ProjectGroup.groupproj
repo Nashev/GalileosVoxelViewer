@@ -1,12 +1,15 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{9698C5F8-E518-4327-A32C-3E48A0BB5D3C}</ProjectGuid>
+        <ProjectGuid>{116A65E6-56BF-4EE3-B499-0849E8DDB27B}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
         <Projects Include="TestProject1.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="Abbrevia 4.0\packages\Delphi 6\Abbrevia.dproj">
+        <Projects Include="TestProject2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Samples\Object Pascal\Multi-Device Samples\User Interface\LowLevel3D\LowLevel3D.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -26,23 +29,32 @@
     <Target Name="TestProject1:Make">
         <MSBuild Projects="TestProject1.dproj" Targets="Make"/>
     </Target>
-    <Target Name="Abbrevia">
-        <MSBuild Projects="Abbrevia 4.0\packages\Delphi 6\Abbrevia.dproj"/>
+    <Target Name="TestProject2">
+        <MSBuild Projects="TestProject2.dproj"/>
     </Target>
-    <Target Name="Abbrevia:Clean">
-        <MSBuild Projects="Abbrevia 4.0\packages\Delphi 6\Abbrevia.dproj" Targets="Clean"/>
+    <Target Name="TestProject2:Clean">
+        <MSBuild Projects="TestProject2.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="Abbrevia:Make">
-        <MSBuild Projects="Abbrevia 4.0\packages\Delphi 6\Abbrevia.dproj" Targets="Make"/>
+    <Target Name="TestProject2:Make">
+        <MSBuild Projects="TestProject2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="LowLevel3D">
+        <MSBuild Projects="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Samples\Object Pascal\Multi-Device Samples\User Interface\LowLevel3D\LowLevel3D.dproj"/>
+    </Target>
+    <Target Name="LowLevel3D:Clean">
+        <MSBuild Projects="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Samples\Object Pascal\Multi-Device Samples\User Interface\LowLevel3D\LowLevel3D.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LowLevel3D:Make">
+        <MSBuild Projects="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Samples\Object Pascal\Multi-Device Samples\User Interface\LowLevel3D\LowLevel3D.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="TestProject1;Abbrevia"/>
+        <CallTarget Targets="TestProject1;TestProject2;LowLevel3D"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="TestProject1:Clean;Abbrevia:Clean"/>
+        <CallTarget Targets="TestProject1:Clean;TestProject2:Clean;LowLevel3D:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="TestProject1:Make;Abbrevia:Make"/>
+        <CallTarget Targets="TestProject1:Make;TestProject2:Make;LowLevel3D:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
