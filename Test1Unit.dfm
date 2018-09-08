@@ -177,6 +177,7 @@ object MainForm: TMainForm
     Align = alClient
     BevelOuter = bvNone
     FullRepaint = False
+    ParentBackground = False
     TabOrder = 2
     OnResize = pnlImgResize
     object img: TImage

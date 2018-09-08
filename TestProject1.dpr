@@ -2,6 +2,7 @@ program TestProject1;
 
 uses
   Forms,
+  VoxelReaderUnit in 'VoxelReaderUnit.pas',
   Test1Unit in 'Test1Unit.pas' {MainForm},
   AbGzTyp in 'Abbrevia 4.0\source\AbGzTyp.pas',
   AbUtils in 'Abbrevia 4.0\source\AbUtils.pas';

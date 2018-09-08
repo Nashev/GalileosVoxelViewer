@@ -1,0 +1,8 @@
+/Win32
+/__recovery
+*.local
+*.tvsconfig
+*.identcache
+*.dsk
+*.stat
+*.drc

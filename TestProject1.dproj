@@ -107,6 +107,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <DCCReference Include="VoxelReaderUnit.pas"/>
         <DCCReference Include="Test1Unit.pas">
             <Form>MainForm</Form>
         </DCCReference>
