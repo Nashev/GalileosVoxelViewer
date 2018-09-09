@@ -7,7 +7,7 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.Ani, FMX.Layouts, FMX.Gestures,
   FMX.StdCtrls, FMX.Controls.Presentation, FMX.Viewport3D, FMX.Types3D,
   System.Math.Vectors, FMX.Objects3D, FMX.Controls3D, FMX.MaterialSources,
-  FMX.Layers3D;
+  FMX.Layers3D, FMX.ListBox, VoxelReaderUnit;
 
 type
   TMainForm = class(TForm)
@@ -21,15 +21,19 @@ type
     dmy2: TDummy;
     dmy3: TDummy;
     sphr1: TSphere;
+    btnR:TButton;
+    edFileName: TComboBox;
     procedure vp1MouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; var Handled: Boolean);
     procedure vp1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure vp1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Single);
+    procedure btnRClick(Sender: TObject);
   private
     MouseDownPosition: TPointF;
   public
-    { Public declarations }
+    VoxelArray: TVoxelArray;
+    ColorCallback: TUpdatePixelColorCallback;
   end;
 
 var
@@ -38,6 +42,13 @@ var
 implementation
 
 {$R *.fmx}
+
+procedure TMainForm.btnRClick(Sender: TObject);
+begin
+  FreeAndNil(VoxelArray);
+  VoxelArray := TVoxelArray.Create(edFileName.Selected.Text);
+  // DrawImage;
+end;
 
 procedure TMainForm.vp1MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Single);
@@ -70,5 +81,6 @@ begin
     else
       z := 0;
 end;
+
 
 end.
