@@ -11,24 +11,21 @@ uses
 
 type
   TMainForm = class(TForm)
-    vpMain: TViewport3D;
-    l1: TLight;
-    c1: TCamera;
+    vp1: TViewport3D;
+    grd3d1: TGrid3D;
+    rndcb1: TRoundCube;
     LightMaterialSource1: TLightMaterialSource;
-    img3d1: TImage3D;
-    Grid3D1: TGrid3D;
+    c1: TCamera;
+    l1: TLight;
     dmy1: TDummy;
     dmy2: TDummy;
     dmy3: TDummy;
-    StrokeCube1: TStrokeCube;
-    RoundCube1: TRoundCube;
-
-    procedure FormKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char;
-      Shift: TShiftState);
-    procedure vpMainMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Single);
-    procedure vpMainMouseWheel(Sender: TObject; Shift: TShiftState;
+    sphr1: TSphere;
+    procedure vp1MouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; var Handled: Boolean);
+    procedure vp1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
+    procedure vp1MouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Single);
   private
     MouseDownPosition: TPointF;
   public
@@ -42,19 +39,29 @@ implementation
 
 {$R *.fmx}
 
-procedure TMainForm.FormKeyDown(Sender: TObject; var Key: Word;
-  var KeyChar: Char; Shift: TShiftState);
-begin
-
-end;
-
-procedure TMainForm.vpMainMouseDown(Sender: TObject; Button: TMouseButton;
+procedure TMainForm.vp1MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Single);
 begin
   MouseDownPosition := PointF(X,Y)
 end;
 
-procedure TMainForm.vpMainMouseWheel(Sender: TObject; Shift: TShiftState;
+procedure TMainForm.vp1MouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Single);
+var
+  s: Integer;
+begin
+  if ssLeft in Shift then begin
+    if vp1.Context.CurrentCameraMatrix.M[1].Normalize.Y > 0 then
+      s := 1
+    else
+      s := -1;
+    dmy1.RotationAngle.y := dmy1.RotationAngle.y + (MouseDownPosition.X - X) * s;
+    dmy2.RotationAngle.x := dmy2.RotationAngle.x + MouseDownPosition.Y - Y;
+    MouseDownPosition := PointF(X,Y)
+  end;
+end;
+
+procedure TMainForm.vp1MouseWheel(Sender: TObject; Shift: TShiftState;
   WheelDelta: Integer; var Handled: Boolean);
 begin
   with dmy3.Position do
