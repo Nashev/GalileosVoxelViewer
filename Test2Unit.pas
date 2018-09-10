@@ -7,7 +7,7 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.Ani, FMX.Layouts, FMX.Gestures,
   FMX.StdCtrls, FMX.Controls.Presentation, FMX.Viewport3D, FMX.Types3D,
   System.Math.Vectors, FMX.Objects3D, FMX.Controls3D, FMX.MaterialSources,
-  FMX.Layers3D, FMX.ListBox, VoxelReaderUnit;
+  FMX.Layers3D, FMX.ListBox, VoxelReaderUnit, FMX.Edit;
 
 type
   TMainForm = class(TForm)
@@ -29,6 +29,12 @@ type
     procedure vp1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Single);
     procedure btnRClick(Sender: TObject);
+    procedure tbLayerChange(Sender: TObject);
+    procedure rgAxisCchange(Sender: TObject);
+    procedure PaletteModeChanged(Sender: TObject);
+    procedure btnInverseClick(Sender: TObject);
+    procedure edLayerChange(Sender: TObject);
+    procedure cbUpChange(Sender: TObject);
   private
     MouseDownPosition: TPointF;
   public
@@ -43,11 +49,41 @@ implementation
 
 {$R *.fmx}
 
+procedure TMainForm.btnInverseClick(Sender: TObject);
+begin
+  //
+end;
+
 procedure TMainForm.btnRClick(Sender: TObject);
 begin
   FreeAndNil(VoxelArray);
   VoxelArray := TVoxelArray.Create(edFileName.Selected.Text);
   // DrawImage;
+end;
+
+procedure TMainForm.cbUpChange(Sender: TObject);
+begin
+  //
+end;
+
+procedure TMainForm.edLayerChange(Sender: TObject);
+begin
+  //
+end;
+
+procedure TMainForm.PaletteModeChanged(Sender: TObject);
+begin
+  //
+end;
+
+procedure TMainForm.rgAxisCchange(Sender: TObject);
+begin
+  //
+end;
+
+procedure TMainForm.tbLayerChange(Sender: TObject);
+begin
+   //
 end;
 
 procedure TMainForm.vp1MouseDown(Sender: TObject; Button: TMouseButton;
