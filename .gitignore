@@ -1,5 +1,6 @@
 /Win32
 /__recovery
+__history
 *.local
 *.tvsconfig
 *.identcache

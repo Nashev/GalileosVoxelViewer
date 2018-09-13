@@ -38,16 +38,7 @@ type
     lbl1: TLabel;
     rgDrawingMode: TRadioGroup;
     pbOverlay: TPaintBox;
-    Panel1: TPanel;
-    Label1: TLabel;
-    TrackBar1: TTrackBar;
-    RadioGroup1: TRadioGroup;
-    SpinEdit1: TSpinEdit;
-    CheckBox1: TCheckBox;
-    SpinEdit2: TSpinEdit;
-    SpinEdit3: TSpinEdit;
-    Button1: TButton;
-    RadioGroup2: TRadioGroup;
+    chkDoubleZoom: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnRClick(Sender: TObject);
@@ -68,7 +59,7 @@ type
     VoxelArray: TVoxelArray;
     CoordTransformer: TCoordTransformer;
     ColorCallback: TUpdatePixelColorCallback;
-    CubeRect: TRect;
+    ZeroScreenOffset: TPoint;
     Multiplier: byte;
     NeedDrawPalette: Boolean;
     NeedDrawImage: Boolean;
@@ -76,13 +67,14 @@ type
     XY: TCoordTransformerXY;
     YZ: TCoordTransformerYZ;
     XZ: TCoordTransformerXZ;
+    Zoomer: TCoordTransformerZoom;
     procedure DrawImage;
     procedure UpdatePalette;
     procedure CoordSystemChanged;
     procedure DrawPaletteIndicator(Visible: Boolean; Value: TVoxelValue);
     procedure Draw(AVoxelArray: TVoxelArray; ACurrentPosition: TVoxelCoords;
-      ADeep: Integer; ACoordTransformer: TCoordTransformer;
-      AColorCallback: TUpdatePixelColorCallback; ACubeRect: TRect;
+      AThickness: Integer; ACoordTransformer: TCoordTransformer;
+      AColorCallback: TUpdatePixelColorCallback; AZeroScreenOffset: TPoint;
       AScreenBuffer: TBitmap);
   public
     procedure UpdateSingleLayerColor(var APixel: TColor; Voxel: TVoxelValue; n: Integer);
@@ -119,12 +111,12 @@ end;
 
 { TMainForm }
 
-procedure TMainForm.Draw(AVoxelArray: TVoxelArray; ACurrentPosition: TVoxelCoords; ADeep: Integer; ACoordTransformer: TCoordTransformer; AColorCallback: TUpdatePixelColorCallback; ACubeRect: TRect; AScreenBuffer: TBitmap);
+procedure TMainForm.Draw(AVoxelArray: TVoxelArray; ACurrentPosition: TVoxelCoords; AThickness: Integer; ACoordTransformer: TCoordTransformer; AColorCallback: TUpdatePixelColorCallback; AZeroScreenOffset: TPoint; AScreenBuffer: TBitmap);
 type
   TLine = array [0..511] of TColor;
 var
   sc: ^TLine;
-  RenderRect, ClipRect: TRect;
+  RenderRect, ClipRect, CubeRect: TRect;
   LayerOffset: Integer;
 
   procedure Loops(Layer: Integer);
@@ -135,9 +127,7 @@ var
       begin
         sc := AScreenBuffer.ScanLine[j];
         for i := RenderRect.Left to RenderRect.Right do
-          begin
-            AColorCallback(sc[i], AVoxelArray.Voxel[ACoordTransformer.ScreenToVoxel(i, j, ACurrentPosition, Layer, ACubeRect)], Abs(ADeep));
-          end;
+          AColorCallback(sc[i], AVoxelArray.Voxel[ACoordTransformer.ScreenToVoxel(i - AZeroScreenOffset.X, j - AZeroScreenOffset.Y, ACurrentPosition, Layer)], Abs(AThickness));
       end;
   end;
 
@@ -148,14 +138,16 @@ begin
   Dec(ClipRect.Bottom);
   Dec(ClipRect.Right);
 
-  if not IntersectRect(RenderRect, ACubeRect, ClipRect) then
+  CubeRect := Rect(0,0, ACoordTransformer.ScreenWidth, ACoordTransformer.ScreenHeight);
+  OffsetRect(CubeRect, AZeroScreenOffset.X, AZeroScreenOffset.Y);
+  if not IntersectRect(RenderRect, CubeRect, ClipRect) then
     Exit;
 
-  if ADeep > 0 then
-    for LayerOffset := 0 to ADeep do
+  if AThickness > 0 then
+    for LayerOffset := 0 to AThickness do
       Loops(LayerOffset)
   else
-    for LayerOffset := ADeep to 0 do
+    for LayerOffset := AThickness to 0 do
       Loops(LayerOffset);
 end;
 
@@ -163,7 +155,7 @@ procedure TMainForm.btnRClick(Sender: TObject);
 begin
   FreeAndNil(VoxelArray);
   VoxelArray := TVoxelArray.Create(edFileName.Text);
-  CoordTransformer.VoxelArray := VoxelArray;
+  CoordSystemChanged;
   DrawImage;
 end;
 
@@ -261,7 +253,7 @@ end;
 
 procedure TMainForm.DrawImage;
 var
-  Deep: Integer;
+  Thickness: Integer;
 begin
   NeedDrawImage := False;
   TWaiting.Start;
@@ -271,20 +263,20 @@ begin
         begin
           tbLayer.SelStart := tbLayer.Position;
           tbLayer.SelEnd   := tbLayer.Position;
-          Deep := 0;
+          Thickness := 0;
         end
       else
         if cbUp.Checked then
           begin
             tbLayer.SelStart := tbLayer.Position;
             tbLayer.SelEnd   := min(tbLayer.Max, tbLayer.Position + edDeep.Value);
-            Deep := tbLayer.SelStart - tbLayer.SelEnd;
+            Thickness := tbLayer.SelStart - tbLayer.SelEnd;
           end
         else
           begin
             tbLayer.SelStart := max(tbLayer.Min, tbLayer.Position - edDeep.Value);
             tbLayer.SelEnd   := tbLayer.Position;
-            Deep := tbLayer.SelEnd - tbLayer.SelStart;
+            Thickness := tbLayer.SelEnd - tbLayer.SelStart;
           end;
 
     img.Picture.Bitmap.Canvas.Brush.Color := clBlack;
@@ -294,11 +286,10 @@ begin
     if not Assigned(VoxelArray) then
       Exit;
 
-    CubeRect := Rect(0, 0, CoordTransformer.ScreenWidth - 1, CoordTransformer.ScreenHeight - 1);
     with CenterPoint(img.Picture.Bitmap.Canvas.ClipRect) do
-      OffsetRect(CubeRect, X-CoordTransformer.ScreenWidth div 2, Y-CoordTransformer.ScreenHeight div 2);
+      ZeroScreenOffset := Point(X - CoordTransformer.ScreenWidth div 2, Y - CoordTransformer.ScreenHeight div 2);
 
-    Draw(VoxelArray, CurrentPosition, Deep, CoordTransformer, ColorCallback, CubeRect, img.Picture.Bitmap);
+    Draw(VoxelArray, CurrentPosition, Thickness, CoordTransformer, ColorCallback, ZeroScreenOffset, img.Picture.Bitmap);
     pnlImg.Invalidate;
     Application.ProcessMessages;
   finally
@@ -308,7 +299,7 @@ end;
 
 procedure TMainForm.DrawModeChanged(Sender: TObject);
 begin
-  NeedDrawImage := True;
+  CoordSystemChanged;
 end;
 
 procedure TMainForm.PaletteModeChanged(Sender: TObject);
@@ -361,6 +352,8 @@ begin
   XY := TCoordTransformerXY.Create;
   YZ := TCoordTransformerYZ.Create;
   XZ := TCoordTransformerXZ.Create;
+  Zoomer := TCoordTransformerZoom.Create;
+  Zoomer.ZoomFactor := 2;
 
   CurrentPosition.Init(255, 255, 255);
   CoordSystemChanged;
@@ -369,6 +362,7 @@ end;
 procedure TMainForm.edLayerChange(Sender: TObject);
 begin
   tbLayer.Position := edLayer.Value;
+  DrawModeChanged(nil);
 end;
 
 procedure TMainForm.ApplicationEventsIdle(Sender: TObject;
@@ -396,15 +390,19 @@ procedure TMainForm.pbOverlayPaint(Sender: TObject);
     pbOverlay.Canvas.MoveTo(X1, Y1);
     pbOverlay.Canvas.LineTo(X2, Y2);
   end;
-
+var
+  Pos: TPoint;
 begin
   if not Assigned(VoxelArray) then
     Exit;
 
   pbOverlay.Canvas.Pen.Style := psSolid;
   pbOverlay.Canvas.Pen.Color := clYellow;
-  with CoordTransformer.VoxelToScreen(CurrentPosition, CurrentPosition, CubeRect) do
+  Pos := CoordTransformer.VoxelToScreen(CurrentPosition, CurrentPosition);
+  with Pos do
     begin
+      Inc(X, ZeroScreenOffset.X);
+      Inc(Y, ZeroScreenOffset.Y);
       Line(X,    Y-10, X,    Y+10);
       Line(X-10, Y,    X+10, Y   );
     end;
@@ -413,7 +411,7 @@ end;
 procedure TMainForm.pbOverlayMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
 begin
   if Assigned(VoxelArray) then
-    DrawPaletteIndicator(True, VoxelArray.Voxel[CoordTransformer.ScreenToVoxel(X, Y, CurrentPosition, 0, CubeRect)]);
+    DrawPaletteIndicator(True, VoxelArray.Voxel[CoordTransformer.ScreenToVoxel(X - ZeroScreenOffset.X, Y - ZeroScreenOffset.Y, CurrentPosition, 0)]);
   pbOverlay.Invalidate;
 end;
 
@@ -448,17 +446,23 @@ begin
     2: CoordTransformer := XZ;
   end;
   CoordTransformer.VoxelArray := VoxelArray;
+  Zoomer.WrappedTransformer := CoordTransformer;
+  if chkDoubleZoom.Checked then
+    CoordTransformer := Zoomer;
   if Assigned(VoxelArray) then begin
+    tbLayer.OnChange := nil;
     tbLayer.Max := CoordTransformer.ScreenDeep - 1;
+    edLayer.MaxValue := tbLayer.Max;
     tbLayer.Position := CoordTransformer.GetDeep(CurrentPosition);
-    DrawModeChanged(nil);
+    tbLayer.OnChange := tbLayerChange;
+    NeedDrawImage := True;
   end;
 end;
 
 procedure TMainForm.pbOverlayMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  CurrentPosition := CoordTransformer.ScreenToVoxel(X, Y, CurrentPosition, 0, CubeRect);
+  CurrentPosition := CoordTransformer.ScreenToVoxel(X - ZeroScreenOffset.X, Y - ZeroScreenOffset.Y, CurrentPosition, 0);
 end;
 
 end.
