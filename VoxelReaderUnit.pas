@@ -37,8 +37,8 @@ type
     function ScreenDeep: Integer; virtual; abstract;
     function GetDeep(AViewPoint: TVoxelCoords): Integer; virtual; abstract;
     procedure SetDeep(var AViewPoint: TVoxelCoords; ADeep: Integer); virtual; abstract;
-    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords; virtual; abstract;
-    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint; virtual; abstract;
+    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer): TVoxelCoords; virtual; abstract;
+    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords): TPoint; virtual; abstract;
     property VoxelArray: TVoxelArray read FVoxelArray write FVoxelArray;
   end;
 
@@ -49,8 +49,8 @@ type
     function ScreenDeep: Integer; override;
     function GetDeep(AViewPoint: TVoxelCoords): Integer; override;
     procedure SetDeep(var AViewPoint: TVoxelCoords; ADeep: Integer); override;
-    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords; override;
-    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint; override;
+    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer): TVoxelCoords; override;
+    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords): TPoint; override;
   end;
 
   TCoordTransformerYZ = class(TCoordTransformer)
@@ -60,8 +60,8 @@ type
     function ScreenDeep: Integer; override;
     function GetDeep(AViewPoint: TVoxelCoords): Integer; override;
     procedure SetDeep(var AViewPoint: TVoxelCoords; ADeep: Integer); override;
-    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords; override;
-    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint; override;
+    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer): TVoxelCoords; override;
+    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords): TPoint; override;
   end;
 
   TCoordTransformerXZ = class(TCoordTransformer)
@@ -71,8 +71,8 @@ type
     function ScreenDeep: Integer; override;
     function GetDeep(AViewPoint: TVoxelCoords): Integer; override;
     procedure SetDeep(var AViewPoint: TVoxelCoords; ADeep: Integer); override;
-    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords; override;
-    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint; override;
+    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer): TVoxelCoords; override;
+    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords): TPoint; override;
   end;
 
   TCoordTransformerFree = class(TCoordTransformer)
@@ -82,8 +82,24 @@ type
     function ScreenDeep: Integer; override;
     function GetDeep(AViewPoint: TVoxelCoords): Integer; override;
     procedure SetDeep(var AViewPoint: TVoxelCoords; ADeep: Integer); override;
-    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords; override;
-    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint; override;
+    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer): TVoxelCoords; override;
+    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords): TPoint; override;
+  end;
+
+  TCoordTransformerZoom = class(TCoordTransformer)
+  private
+    FWrappedTransformer: TCoordTransformer;
+    FZoomFactor: Single;
+  public
+    function ScreenWidth: Integer; override;
+    function ScreenHeight: Integer; override;
+    function ScreenDeep: Integer; override;
+    function GetDeep(AViewPoint: TVoxelCoords): Integer; override;
+    procedure SetDeep(var AViewPoint: TVoxelCoords; ADeep: Integer); override;
+    function ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer): TVoxelCoords; override;
+    function VoxelToScreen(ACoords, AViewPoint: TVoxelCoords): TPoint; override;
+    property WrappedTransformer: TCoordTransformer read FWrappedTransformer write FWrappedTransformer;
+    property ZoomFactor: Single read FZoomFactor write FZoomFactor;
   end;
 
   TUpdatePixelColorCallback = procedure (var APixel: TColor; Voxel: TVoxelValue; n: Integer) of object;
@@ -122,45 +138,45 @@ end;
 
 ///////////////////////////////////////////////////////////
 
-function TCoordTransformerXY.ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords;
+function TCoordTransformerXY.ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer): TVoxelCoords;
 begin
-  Result.X := max(0, min(VoxelArray.Size.X - 1, i - ACubeRect.Left));
-  Result.Y := max(0, min(VoxelArray.Size.Y - 1, VoxelArray.Size.Y - 1 - (j - ACubeRect.Top)));
-  Result.Z := AViewPoint.Z + Deep;
+  Result.X := max(0, min(VoxelArray.Size.X - 1, i));
+  Result.Y := max(0, min(VoxelArray.Size.Y - 1, VoxelArray.Size.Y - 1 - j));
+  Result.Z := max(0, min(VoxelArray.Size.Z - 1, AViewPoint.Z + Deep));
 end;
 
-function TCoordTransformerYZ.ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords;
+function TCoordTransformerYZ.ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer): TVoxelCoords;
 begin
-  Result.X := AViewPoint.X + Deep;
-  Result.Y := max(0, min(VoxelArray.Size.Y - 1, i - ACubeRect.Left));
-  Result.Z := max(0, min(VoxelArray.Size.Z - 1, VoxelArray.Size.Z - 1 - (j - ACubeRect.Top)));
+  Result.X := max(0, min(VoxelArray.Size.X - 1, AViewPoint.X + Deep));
+  Result.Y := max(0, min(VoxelArray.Size.Y - 1, i));
+  Result.Z := max(0, min(VoxelArray.Size.Z - 1, VoxelArray.Size.Z - 1 - j));
 end;
 
-function TCoordTransformerXZ.ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords;
+function TCoordTransformerXZ.ScreenToVoxel(i, j: Integer; AViewPoint: TVoxelCoords; Deep: Integer): TVoxelCoords;
 begin
-  Result.X := max(0, min(VoxelArray.Size.X - 1, i - ACubeRect.Left));
-  Result.Y := AViewPoint.Y + Deep;
-  Result.Z := max(0, min(VoxelArray.Size.Z - 1, VoxelArray.Size.Z - 1 - (j - ACubeRect.Top)));
+  Result.X := max(0, min(VoxelArray.Size.X - 1, i));
+  Result.Y := max(0, min(VoxelArray.Size.Y - 1, AViewPoint.Y + Deep));
+  Result.Z := max(0, min(VoxelArray.Size.Z - 1, VoxelArray.Size.Z - 1 - j));
 end;
 
 ///////////////////////////////////////////////////////////
 
-function TCoordTransformerXY.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint;
+function TCoordTransformerXY.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords): TPoint;
 begin
-  Result.X := ACubeRect.Left + ACoords.X;                 //  X = i - dx        =>    i = X + dx
-  Result.Y := ACubeRect.Top  + ScreenHeight - ACoords.Y;  //  Y = c - (j - dy)  =>    j = c - Y + dy
+  Result.X := ACoords.X;                 //  X = i - dx        =>    i = X + dx
+  Result.Y := ScreenHeight - ACoords.Y;  //  Y = c - (j - dy)  =>    j = c - Y + dy
 end;
 
-function TCoordTransformerYZ.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint;
+function TCoordTransformerYZ.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords): TPoint;
 begin
-  Result.X := ACubeRect.Left + ACoords.Y;
-  Result.Y := ACubeRect.Top  + ScreenHeight - ACoords.Z;
+  Result.X := ACoords.Y;
+  Result.Y := ScreenHeight - ACoords.Z;
 end;
 
-function TCoordTransformerXZ.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords; ACubeRect: TRect): TPoint;
+function TCoordTransformerXZ.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords): TPoint;
 begin
-  Result.X := ACubeRect.Left + ACoords.X;
-  Result.Y := ACubeRect.Top  + ScreenHeight - ACoords.Z;
+  Result.X := ACoords.X;
+  Result.Y := ScreenHeight - ACoords.Z;
 end;
 
 ///////////////////////////////////////////////////////////
@@ -348,7 +364,7 @@ begin
 end;
 
 function TCoordTransformerFree.ScreenToVoxel(i, j: Integer;
-  AViewPoint: TVoxelCoords; Deep: Integer; ACubeRect: TRect): TVoxelCoords;
+  AViewPoint: TVoxelCoords; Deep: Integer): TVoxelCoords;
 begin
 
 end;
@@ -364,10 +380,51 @@ begin
 
 end;
 
-function TCoordTransformerFree.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords;
-  ACubeRect: TRect): TPoint;
+function TCoordTransformerFree.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords): TPoint;
 begin
 
+end;
+
+{ TCoordTransformerZoom }
+
+function TCoordTransformerZoom.GetDeep(AViewPoint: TVoxelCoords): Integer;
+begin
+  Result := Round(FWrappedTransformer.GetDeep(AViewPoint) * ZoomFactor);
+end;
+
+function TCoordTransformerZoom.ScreenDeep: Integer;
+begin
+  Result := Round(FWrappedTransformer.ScreenDeep * ZoomFactor);
+end;
+
+function TCoordTransformerZoom.ScreenHeight: Integer;
+begin
+  Result := Round(FWrappedTransformer.ScreenHeight * ZoomFactor);
+end;
+
+function TCoordTransformerZoom.ScreenToVoxel(i, j: Integer;
+  AViewPoint: TVoxelCoords; Deep: Integer): TVoxelCoords;
+begin
+  i := Round(i / ZoomFactor);
+  j := Round(j / ZoomFactor);
+  Result := FWrappedTransformer.ScreenToVoxel(i, j, AViewPoint, Deep);
+end;
+
+function TCoordTransformerZoom.ScreenWidth: Integer;
+begin
+  Result := Round(FWrappedTransformer.ScreenWidth * ZoomFactor);
+end;
+
+procedure TCoordTransformerZoom.SetDeep(var AViewPoint: TVoxelCoords; ADeep: Integer);
+begin
+  FWrappedTransformer.SetDeep(AViewPoint, Round(ADeep / ZoomFactor));
+end;
+
+function TCoordTransformerZoom.VoxelToScreen(ACoords, AViewPoint: TVoxelCoords): TPoint;
+begin
+  Result := FWrappedTransformer.VoxelToScreen(ACoords, AViewPoint);
+  Result.X := Round(Result.X * ZoomFactor);
+  Result.Y := Round(Result.Y * ZoomFactor);
 end;
 
 end.

@@ -34,7 +34,7 @@ object MainForm: TMainForm
     object edFileName: TComboBox
       Left = 4
       Top = 8
-      Width = 981
+      Width = 911
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
@@ -50,12 +50,12 @@ object MainForm: TMainForm
           'vol_0.gwg')
     end
     object btnR: TButton
-      Left = 985
+      Left = 921
       Top = 8
-      Width = 21
+      Width = 85
       Height = 21
       Anchors = [akTop, akRight]
-      Caption = 'R'
+      Caption = #1047#1072#1075#1088#1091#1079#1080#1090#1100
       Default = True
       TabOrder = 1
       OnClick = btnRClick
@@ -80,6 +80,7 @@ object MainForm: TMainForm
       Top = 4
       Width = 28
       Height = 497
+      Anchors = [akLeft, akTop, akBottom]
       Max = 511
       Orientation = trVertical
       PageSize = 16
@@ -128,6 +129,7 @@ object MainForm: TMainForm
       Top = 504
       Width = 53
       Height = 22
+      Anchors = [akLeft, akBottom]
       MaxValue = 512
       MinValue = 0
       TabOrder = 4
@@ -167,6 +169,15 @@ object MainForm: TMainForm
         #1047#1072#1090#1091#1093#1072#1085#1080#1077)
       TabOrder = 7
       OnClick = PaletteModeChanged
+    end
+    object chkDoubleZoom: TCheckBox
+      Left = 42
+      Top = 356
+      Width = 117
+      Height = 17
+      Caption = #1044#1074#1086#1081#1085#1086#1081' '#1088#1072#1079#1084#1077#1088
+      TabOrder = 8
+      OnClick = DrawModeChanged
     end
   end
   object pnlImg: TPanel
