@@ -27,7 +27,7 @@ object MainForm: TMainForm
       ItemIndex = 0
       Position.X = 8.000000000000000000
       Position.Y = 8.000000000000000000
-      Size.Width = 641.000000000000000000
+      Size.Width = 585.000000000000000000
       Size.Height = 21.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
@@ -37,13 +37,13 @@ object MainForm: TMainForm
     object btnR: TButton
       Anchors = [akTop, akRight]
       Default = True
-      Position.X = 656.000000000000000000
+      Position.X = 600.000000000000000000
       Position.Y = 8.000000000000000000
-      Size.Width = 21.000000000000000000
+      Size.Width = 77.000000000000000000
       Size.Height = 21.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 1
-      Text = 'R'
+      Text = #1054#1090#1082#1088#1099#1090#1100
       OnClick = btnRClick
       Left = 985
       Top = 8
@@ -197,6 +197,17 @@ object MainForm: TMainForm
       Left = 48
       Top = 128
     end
+    object ed1: TSpinBox
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 9
+      Cursor = crIBeam
+      Value = 10.000000000000000000
+      Position.X = 88.000000000000000000
+      Position.Y = 56.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
   end
   object vp1: TViewport3D
     Align = Client
@@ -225,7 +236,7 @@ object MainForm: TMainForm
         Height = 1.000015020370483000
         Depth = 3.423298835754395000
         HitTest = False
-        MaterialSource = LightMaterialSource1
+        MaterialSource = img
         Quanternion = '(0,-0.00179795338772237,0,0.999998152256012)'
       end
       object sphr1: TSphere
@@ -234,7 +245,7 @@ object MainForm: TMainForm
         Depth = 5.000000000000000000
         HitTest = False
         TwoSide = True
-        MaterialSource = LightMaterialSource1
+        MaterialSource = img
       end
     end
     object dmy1: TDummy
@@ -279,7 +290,7 @@ object MainForm: TMainForm
       end
     end
   end
-  object LightMaterialSource1: TLightMaterialSource
+  object img: TLightMaterialSource
     Diffuse = claSandybrown
     Ambient = xFF404040
     Emissive = claNull

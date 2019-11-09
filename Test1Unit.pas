@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, Spin, Contnrs,
+  Dialogs, StdCtrls, ExtCtrls, Spin, Contnrs, System.UITypes,
   ComCtrls, AppEvnts, VoxelReaderUnit;
 
 type
@@ -77,9 +77,9 @@ type
       AColorCallback: TUpdatePixelColorCallback; AZeroScreenOffset: TPoint;
       AScreenBuffer: TBitmap);
   public
-    procedure UpdateSingleLayerColor(var APixel: TColor; Voxel: TVoxelValue; n: Integer);
-    procedure UpdateMultiLayerSummColor (var APixel: TColor; Voxel: TVoxelValue; n: Integer);
-    procedure UpdateMultiLayerFadeColor (var APixel: TColor; Voxel: TVoxelValue; n: Integer);
+    procedure UpdateSingleLayerColor(var APixel: TAlphaColor; Voxel: TVoxelValue; n: Integer);
+    procedure UpdateMultiLayerSummColor (var APixel: TAlphaColor; Voxel: TVoxelValue; n: Integer);
+    procedure UpdateMultiLayerFadeColor (var APixel: TAlphaColor; Voxel: TVoxelValue; n: Integer);
   end;
 
 var
@@ -111,9 +111,17 @@ end;
 
 { TMainForm }
 
-procedure TMainForm.Draw(AVoxelArray: TVoxelArray; ACurrentPosition: TVoxelCoords; AThickness: Integer; ACoordTransformer: TCoordTransformer; AColorCallback: TUpdatePixelColorCallback; AZeroScreenOffset: TPoint; AScreenBuffer: TBitmap);
+procedure TMainForm.Draw(
+  AVoxelArray: TVoxelArray;
+  ACurrentPosition: TVoxelCoords;
+  AThickness: Integer;
+  ACoordTransformer: TCoordTransformer;
+  AColorCallback: TUpdatePixelColorCallback;
+  AZeroScreenOffset: TPoint;
+  AScreenBuffer: TBitmap
+);
 type
-  TLine = array [0..511] of TColor;
+  TLine = array [0..511] of TAlphaColor;
 var
   sc: ^TLine;
   RenderRect, ClipRect, CubeRect: TRect;
@@ -121,13 +129,25 @@ var
 
   procedure Loops(Layer: Integer);
   var
-    i, j: Integer;
+    i, j, LineSize: Integer;
   begin
+    sc := AScreenBuffer.ScanLine[AScreenBuffer.Height - 1];
+    LineSize := BytesPerScanline(AScreenBuffer.Width, 32, 32);
     for j := RenderRect.Top to RenderRect.Bottom do
       begin
-        sc := AScreenBuffer.ScanLine[j];
         for i := RenderRect.Left to RenderRect.Right do
-          AColorCallback(sc[i], AVoxelArray.Voxel[ACoordTransformer.ScreenToVoxel(i - AZeroScreenOffset.X, j - AZeroScreenOffset.Y, ACurrentPosition, Layer)], Abs(AThickness));
+          AColorCallback(
+            sc[i],
+            AVoxelArray.Voxel[
+              ACoordTransformer.ScreenToVoxel(
+                i - AZeroScreenOffset.X,
+                j - AZeroScreenOffset.Y,
+                ACurrentPosition,
+                Layer
+              )],
+              Abs(AThickness)
+            );
+        sc := Pointer(PByte(sc) + LineSize);
       end;
   end;
 
@@ -164,7 +184,7 @@ begin
   FreeAndNil(VoxelArray);
 end;
 
-procedure TMainForm.UpdateMultiLayerSummColor (var APixel: TColor; Voxel: TVoxelValue; n: Integer);
+procedure TMainForm.UpdateMultiLayerSummColor (var APixel: TAlphaColor; Voxel: TVoxelValue; n: Integer);
 var
   k: Single;
   c: Byte;
@@ -180,7 +200,7 @@ begin
   TRGBQuad(APixel).rgbReserved := 0;
 end;
 
-procedure TMainForm.UpdateMultiLayerFadeColor (var APixel: TColor; Voxel: TVoxelValue; n: Integer);
+procedure TMainForm.UpdateMultiLayerFadeColor (var APixel: TAlphaColor; Voxel: TVoxelValue; n: Integer);
 var
   k: Single;
   c: Byte;
@@ -196,7 +216,7 @@ begin
   TRGBQuad(APixel).rgbReserved := 0;
 end;
 
-procedure TMainForm.UpdateSingleLayerColor(var APixel: TColor; Voxel: TVoxelValue; n: Integer);
+procedure TMainForm.UpdateSingleLayerColor(var APixel: TAlphaColor; Voxel: TVoxelValue; n: Integer);
 var
   c: Byte;
 begin
@@ -209,7 +229,7 @@ end;
 
 procedure TMainForm.UpdatePalette;
 type
-  TLine = array [0..511] of TColor;
+  TLine = array [0..511] of TAlphaColor;
 var
   ScreenBuffer: TBitmap;
   sc: ^TLine;

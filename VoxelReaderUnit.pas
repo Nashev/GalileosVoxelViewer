@@ -102,7 +102,7 @@ type
     property ZoomFactor: Single read FZoomFactor write FZoomFactor;
   end;
 
-  TUpdatePixelColorCallback = procedure (var APixel: TColor; Voxel: TVoxelValue; n: Integer) of object;
+  TUpdatePixelColorCallback = procedure (var APixel: TAlphaColor; Voxel: TVoxelValue; n: Integer) of object;
 
   TVoxelArray = class
   private

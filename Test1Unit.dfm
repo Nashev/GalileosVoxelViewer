@@ -39,7 +39,7 @@ object MainForm: TMainForm
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
       Text = 
-        '..\data\2011.08.09\10210000000000000000000000000000000004b245c0_' +
+        '..\data\2018.11.01\cfeb5feb6d2247e5abacca4f032fb85ecfeb5feb6d22_' +
         'vol_0.gwg'
       Items.Strings = (
         
@@ -47,6 +47,9 @@ object MainForm: TMainForm
           'vol_0.gwg'
         
           '..\data\2018.08.28\c378a0e168b148b881fdb05856d3e90fc378a0e168b1_' +
+          'vol_0.gwg'
+        
+          '..\data\2018.11.01\cfeb5feb6d2247e5abacca4f032fb85ecfeb5feb6d22_' +
           'vol_0.gwg')
     end
     object btnR: TButton
@@ -68,6 +71,9 @@ object MainForm: TMainForm
     Height = 542
     Align = alLeft
     TabOrder = 1
+    DesignSize = (
+      165
+      542)
     object lbl1: TLabel
       Left = 56
       Top = 288
